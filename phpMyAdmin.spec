@@ -63,7 +63,7 @@ MySQL). Aktualnie phpMyAdmin potrafi:
 
 %prep
 #%setup -q -n %{name}-%{version}-%{_pl}
-%setup -q -n %{name}-%{version}
+%setup -q
 %patch -p1
 
 %install
