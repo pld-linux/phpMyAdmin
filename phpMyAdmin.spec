@@ -2,12 +2,12 @@ Summary:	phpMyAdmin - web-based MySQL administration
 Summary(pl):	phpMyAdmin - administracja bazami MySQL przez WWW
 Name:		phpMyAdmin
 #%define		_rc	rc2
-Version:	2.5.4
+Version:	2.5.5
 Release:	1
 License:	GPL v2
 Group:		Applications/Databases/Interfaces
-Source0:	http://dl.sourceforge.net/phpmyadmin/%{name}-%{version}-php.tar.bz2
-# Source0-md5:	c3a8d771c9846dd95b7283c7ce0f20dd
+Source0:	http://dl.sourceforge.net/phpmyadmin/%{name}-%{version}.tar.bz2
+# Source0-md5:	b790e9f10f9e0d8406d2684e7ad6a9df
 Source1:	%{name}.conf
 Patch0:		%{name}-config.patch
 URL:		http://www.phpmyadmin.net/
@@ -67,7 +67,7 @@ rm -rf $RPM_BUILD_ROOT
 install -d $RPM_BUILD_ROOT%{_myadmindir}/{css,lang,images,libraries/{auth,export}} \
 	$RPM_BUILD_ROOT{%{_sysconfdir},/etc/httpd}
 
-install *.php *.html *.css badwords.txt $RPM_BUILD_ROOT%{_myadmindir}
+install *.php *.html *.css $RPM_BUILD_ROOT%{_myadmindir}
 install images/*.{gif,png} $RPM_BUILD_ROOT%{_myadmindir}/images
 install lang/*.php $RPM_BUILD_ROOT%{_myadmindir}/lang
 install css/* $RPM_BUILD_ROOT%{_myadmindir}/css
@@ -122,7 +122,7 @@ fi
 
 %files
 %defattr(644,root,root,755)
-%doc Documentation.* ANNOUNCE.txt CREDITS ChangeLog INSTALL README TODO translators.html
+%doc Documentation.* CREDITS ChangeLog INSTALL README TODO translators.html
 %dir %{_sysconfdir}
 %attr(640,root,http) %config(noreplace) %verify(not size mtime md5) %{_sysconfdir}/*
 %config(noreplace) %verify(not size mtime md5) /etc/httpd/%{name}.conf
@@ -131,7 +131,6 @@ fi
 %{_myadmindir}/images
 %{_myadmindir}/lang
 %{_myadmindir}/libraries
-%{_myadmindir}/badwords.txt
 %{_myadmindir}/*.css
 %{_myadmindir}/*.html
 %{_myadmindir}/*.php
