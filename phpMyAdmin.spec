@@ -1,5 +1,3 @@
-# NOTE:	currently apache configs are in /etc/httpd/httpd.conf/ directory
-#	but phpMyAdmin.conf is placed in /etc/httpd/
 Summary:	phpMyAdmin - web-based MySQL administration
 Summary(pl):	phpMyAdmin - administracja bazami MySQL przez WWW
 Name:		phpMyAdmin
