@@ -1,9 +1,9 @@
---- phpMyAdmin-2.4.0/config.inc.php~	Sun Feb 23 21:05:16 2003
-+++ phpMyAdmin-2.4.0/config.inc.php	Wed Apr 16 12:07:48 2003
-@@ -70,7 +70,7 @@
-                                                     // (this user must have read-only
- $cfg['Servers'][$i]['controlpass']   = '';          // access to the "mysql/user"
-                                                     // and "mysql/db" tables)
+--- phpMyAdmin-2.5.5/config.inc.php~	2003-12-29 01:02:27.000000000 +0100
++++ phpMyAdmin-2.5.5/config.inc.php	2003-12-29 01:02:55.000000000 +0100
+@@ -79,7 +79,7 @@
+                                                     // The controluser is also
+                                                     // used for all relational
+                                                     // features (pmadb)
 -$cfg['Servers'][$i]['auth_type']     = 'config';    // Authentication method (config, http or cookie based)?
 +$cfg['Servers'][$i]['auth_type']     = 'cookie';    // Authentication method (config, http or cookie based)?
  $cfg['Servers'][$i]['user']          = 'root';      // MySQL user
