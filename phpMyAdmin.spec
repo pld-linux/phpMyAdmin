@@ -2,7 +2,7 @@ Summary:	phpMyAdmin - web-based MySQL administration
 Summary(pl):	phpMyAdmin - administracja bazami MySQL przez WWW
 Name:		phpMyAdmin
 %define		_pl	pl2
-%define		_rel	1
+%define		_rel	3
 # NOTE: bump _rel with every new patchlevel
 Version:	2.6.0
 #Release:	1
