@@ -35,16 +35,16 @@ but also a single database. To accomplish the latter you'll need a
 properly set up MySQL-user who can read/write only the desired
 database. It's up to you to look up the appropiate part in the MySQL
 manual. Currently phpMyAdmin can:
-  - create and drop databases
-  - create, copy, drop and alter tables
-  - delete, edit and add fields
-  - execute any SQL-statement, even batch-queries
-  - manage keys on fields
-  - load text files into tables
-  - create (*) and read dumps of tables
-  - export (*) and import data to CSV values
-  - administer multiple servers and single databases
-  - communicate in more than 20 different languages
+- create and drop databases
+- create, copy, drop and alter tables
+- delete, edit and add fields
+- execute any SQL-statement, even batch-queries
+- manage keys on fields
+- load text files into tables
+- create (*) and read dumps of tables
+- export (*) and import data to CSV values
+- administer multiple servers and single databases
+- communicate in more than 20 different languages
 
 %description -l pl
 phpMyAdmin potrafi zarz±dzaæ ca³ymi bazami MySQL (potrzebne
@@ -52,16 +52,16 @@ uprawnienia superu¿ytkownika) jak i pojedynczymi bazami danych.
 Potrzebny jest u¿ytkownik, który ma prawa zapisu/odczytu tylko tych
 baz, którymi chcemy administrowaæ (wiêcej informacji w odpowiedniej
 podrêcznika MySQL). Aktualnie phpMyAdmin potrafi:
-  - tworzyæ i usuwaæ bazy
-  - wykonywaæ create, copy, drop oraz alter na tabelach
-  - dodawaæ, usuwaæ i modyfikowaæ pola
-  - wykonywaæ dowolne zapytania SQL
-  - zarz±dzaæ kluczami na rekordach
-  - wczytywaæ tekst z plików do tabel
-  - obs³ugiwaæ ponad 20 jêzyków
-  - zarz±dzaæ wieloma serwerami i pojedynczymi bazami danych
-  - eksportowaæ i importowaæ dane do warto¶ci CSV
-  - tworzyæ i czytaæ zrzuty tabel
+- tworzyæ i usuwaæ bazy
+- wykonywaæ create, copy, drop oraz alter na tabelach
+- dodawaæ, usuwaæ i modyfikowaæ pola
+- wykonywaæ dowolne zapytania SQL
+- zarz±dzaæ kluczami na rekordach
+- wczytywaæ tekst z plików do tabel
+- obs³ugiwaæ ponad 20 jêzyków
+- zarz±dzaæ wieloma serwerami i pojedynczymi bazami danych
+- eksportowaæ i importowaæ dane do warto¶ci CSV
+- tworzyæ i czytaæ zrzuty tabel
 
 %prep
 %setup -q -n %{name}-%{version}-%{_pl}
@@ -76,7 +76,7 @@ install -d $RPM_BUILD_ROOT%{_myadmindir}/{css,lang,libraries/{auth,export,dbg,db
 install *.php *.html *.css $RPM_BUILD_ROOT%{_myadmindir}
 #install images/*.{gif,png} $RPM_BUILD_ROOT%{_myadmindir}/images
 install lang/*.php $RPM_BUILD_ROOT%{_myadmindir}/lang
-cp -rf themes  $RPM_BUILD_ROOT%{_myadmindir}/
+cp -rf themes $RPM_BUILD_ROOT%{_myadmindir}/
 install css/* $RPM_BUILD_ROOT%{_myadmindir}/css
 install libraries/*.{js,php} $RPM_BUILD_ROOT%{_myadmindir}/libraries
 install libraries/auth/*.php $RPM_BUILD_ROOT%{_myadmindir}/libraries/auth
@@ -112,14 +112,14 @@ fi
 if [ "$1" = "0" ]; then
 	umask 027
 	if [ -d /etc/httpd/httpd.conf ]; then
-	    rm -f /etc/httpd/httpd.conf/99_%{name}.conf
+		rm -f /etc/httpd/httpd.conf/99_%{name}.conf
 	else
 		grep -v "^Include.*%{name}.conf" /etc/httpd/httpd.conf > \
 			/etc/httpd/httpd.conf.tmp
 		mv -f /etc/httpd/httpd.conf.tmp /etc/httpd/httpd.conf
 	fi
 	if [ -f /var/lock/subsys/httpd ]; then
-	    /usr/sbin/apachectl restart 1>&2
+		/usr/sbin/apachectl restart 1>&2
 	fi
 fi
 
