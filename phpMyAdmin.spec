@@ -7,7 +7,7 @@ Release:	1
 License:	GPL v2
 Group:		Applications/Databases/Interfaces
 Source0:	http://dl.sourceforge.net/phpmyadmin/%{name}-%{version}.tar.bz2
-# Source0-md5:	51eebb1363bbef27a7cf6e3fbb95ee5c
+# Source0-md5:	b62afe98600eacc2a3300c9856b349f7
 Source1:	%{name}.conf
 Patch0:		%{name}-config.patch
 URL:		http://www.phpmyadmin.net/
