@@ -4,13 +4,14 @@ Summary:	phpMyAdmin - web-based MySQL administration
 Summary(pl):	phpMyAdmin - administracja bazami MySQL przez WWW
 Name:		phpMyAdmin
 Version:	2.5.2
-Release:	0.%{_rc}.2
+Release:	0.%{_rc}.3
 License:	GPL v2
 Group:		Applications/Databases/Interfaces
 Source0:	http://dl.sourceforge.net/phpmyadmin/%{name}-%{version}-%{_rc}-php.tar.bz2
 # Source0-md5:	f6a0ef4c6ed1f61390b270f0fcd024e1
 Patch0:		%{name}-config.patch
 URL:		http://www.phpmyadmin.net/
+BuildRequires:	rpm-php-pearprov
 Requires:	mysql
 Requires:	php-mysql
 Requires:	php
@@ -60,7 +61,7 @@ MySQL). Aktualnie phpMyAdmin potrafi:
 
 %install
 rm -rf $RPM_BUILD_ROOT
-install -d $RPM_BUILD_ROOT%{_myadmindir}/{css,lang,images,libraries,libraries/auth}
+install -d $RPM_BUILD_ROOT%{_myadmindir}/{css,lang,images,libraries/{auth,export}}
 
 install *.php *.html *.css badwords.txt $RPM_BUILD_ROOT%{_myadmindir}
 install images/*.{gif,png} $RPM_BUILD_ROOT%{_myadmindir}/images
@@ -68,6 +69,7 @@ install lang/*.php $RPM_BUILD_ROOT%{_myadmindir}/lang
 install css/* $RPM_BUILD_ROOT%{_myadmindir}/css
 install libraries/*.{js,php} $RPM_BUILD_ROOT%{_myadmindir}/libraries
 install libraries/auth/*.php $RPM_BUILD_ROOT%{_myadmindir}/libraries/auth
+install libraries/export/*.php $RPM_BUILD_ROOT%{_myadmindir}/libraries/export
 
 %clean
 rm -rf $RPM_BUILD_ROOT
