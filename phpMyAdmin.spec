@@ -48,13 +48,13 @@ manual. Currently phpMyAdmin can:
 
 %description -l pl
 phpMyAdmin potrafi zarz±dzaæ ca³ymi bazami MySQL (potrzebne
-uprawnienia super-user'a) jak i pojedynczymi bazami danych. Bêdziesz
-potrzebowa³ u¿ytkownika, który ma prawa zapisu/odczytu tylko tych baz,
-którymi chcesz administrowaæ (zajrzyj do odpowiedniej czê¶ci manual'a
-MySQL). Aktualnie phpMyAdmin potrafi:
+uprawnienia superu¿ytkownika) jak i pojedynczymi bazami danych.
+Potrzebny jest u¿ytkownik, który ma prawa zapisu/odczytu tylko tych
+baz, którymi chcemy administrowaæ (wiêcej informacji w odpowiedniej
+podrêcznika MySQL). Aktualnie phpMyAdmin potrafi:
   - tworzyæ i usuwaæ bazy
-  - create, copy, drop oraz alter na tabelach
-  - dodawaæ, usuwaæ i edytowaæ pola
+  - wykonywaæ create, copy, drop oraz alter na tabelach
+  - dodawaæ, usuwaæ i modyfikowaæ pola
   - wykonywaæ dowolne zapytania SQL
   - zarz±dzaæ kluczami na rekordach
   - wczytywaæ tekst z plików do tabel
