@@ -1,11 +1,9 @@
-# NOTE:	currently apache configs are in /etc/httpd/httpd.conf/ directory
-#	but phpMyAdmin.conf is placed in /etc/httpd/
 Summary:	phpMyAdmin - web-based MySQL administration
 Summary(pl):	phpMyAdmin - administracja bazami MySQL przez WWW
 Name:		phpMyAdmin
-%define		_rc	rc1
+%define	_rc	rc1
 Version:	2.5.6
-Release:	0.%{_rc}.1
+Release:	0.%{_rc}.2
 License:	GPL v2
 Group:		Applications/Databases/Interfaces
 Source0:	http://dl.sourceforge.net/phpmyadmin/%{name}-%{version}-%{_rc}.tar.bz2
@@ -15,12 +13,12 @@ Patch0:		%{name}-config.patch
 URL:		http://www.phpmyadmin.net/
 BuildRequires:	rpm-php-pearprov
 #Requires:	mysql
-Requires(postun):	perl-base
+Requires(postun):	perl
 Requires:	php-mysql
 Requires:	php-pcre
 Requires:	php
 Requires:	webserver
-BuildArch:	noarch
+Buildarch:	noarch
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %define		_myadmindir	%{_datadir}/%{name}
@@ -97,7 +95,7 @@ fi
 if [ "$1" = "0" ]; then
 	umask 027
 	grep -v "^Include.*phpMyAdmin.conf" /etc/httpd/httpd.conf > \
-		etc/httpd/httpd.conf.tmp
+		/etc/httpd/httpd.conf.tmp
 	mv -f /etc/httpd/httpd.conf.tmp /etc/httpd/httpd.conf
 	if [ -f /var/lock/subsys/httpd ]; then
 		/usr/sbin/apachectl restart 1>&2
@@ -124,7 +122,7 @@ fi
 
 %files
 %defattr(644,root,root,755)
-%doc Documentation.* CREDITS ChangeLog INSTALL README TODO translators.html scripts
+%doc Documentation.* CREDITS ChangeLog INSTALL README TODO
 %dir %{_sysconfdir}
 %attr(640,root,http) %config(noreplace) %verify(not size mtime md5) %{_sysconfdir}/*
 %config(noreplace) %verify(not size mtime md5) /etc/httpd/%{name}.conf
