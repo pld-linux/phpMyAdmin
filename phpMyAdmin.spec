@@ -11,6 +11,7 @@ Source0:	http://dl.sourceforge.net/phpmyadmin/%{name}-%{version}-%{_rc}-php.tar.
 # Source0-md5:	f6a0ef4c6ed1f61390b270f0fcd024e1
 Patch0:		%{name}-config.patch
 URL:		http://www.phpmyadmin.net/
+BuildRequires:	rpm-php-pearprov
 Requires:	mysql
 Requires:	php-mysql
 Requires:	php
