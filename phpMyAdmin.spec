@@ -2,11 +2,12 @@ Summary:	phpMyAdmin - web-based MySQL administration
 Summary(pl):	phpMyAdmin - administracja bazami MySQL przez WWW
 Name:		phpMyAdmin
 Version:	2.5.3
-Release:	1
+Release:	2
 License:	GPL v2
 Group:		Applications/Databases/Interfaces
 Source0:	http://dl.sourceforge.net/phpmyadmin/%{name}-%{version}-php.tar.bz2
 # Source0-md5:	1a7848cdb2e004ae07012f2306606e0f
+Source1:	%{name}.conf
 Patch0:		%{name}-config.patch
 URL:		http://www.phpmyadmin.net/
 BuildRequires:	rpm-php-pearprov
@@ -18,7 +19,8 @@ Requires:	webserver
 Buildarch:	noarch
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
-%define		_myadmindir	/home/services/httpd/html/myadmin
+%define		_myadmindir	%{_datadir}/%{name}
+%define		_sysconfdir	/etc/%{name}
 
 %description
 phpMyAdmin can administer a whole MySQL-server (needs a super-user)
@@ -60,7 +62,8 @@ MySQL). Aktualnie phpMyAdmin potrafi:
 
 %install
 rm -rf $RPM_BUILD_ROOT
-install -d $RPM_BUILD_ROOT%{_myadmindir}/{css,lang,images,libraries/{auth,export}}
+install -d $RPM_BUILD_ROOT%{_myadmindir}/{css,lang,images,libraries/{auth,export}} \
+	$RPM_BUILD_ROOT{%{_sysconfdir},/etc/httpd}
 
 install *.php *.html *.css badwords.txt $RPM_BUILD_ROOT%{_myadmindir}
 install images/*.{gif,png} $RPM_BUILD_ROOT%{_myadmindir}/images
@@ -70,13 +73,48 @@ install libraries/*.{js,php} $RPM_BUILD_ROOT%{_myadmindir}/libraries
 install libraries/auth/*.php $RPM_BUILD_ROOT%{_myadmindir}/libraries/auth
 install libraries/export/*.php $RPM_BUILD_ROOT%{_myadmindir}/libraries/export
 
+install config.inc.php $RPM_BUILD_ROOT%{_sysconfdir}
+ln -sf %{_sysconfdir}/config.inc.php $RPM_BUILD_ROOT%{_myadmindir}/config.inc.php
+
+install %SOURCE1 $RPM_BUILD_ROOT/etc/httpd/%{name}.conf
+
 %clean
 rm -rf $RPM_BUILD_ROOT
+
+%post
+if [ -f /etc/httpd/httpd.conf ] && ! grep -q "^Include.*phpMyAdmin.conf" /etc/httpd/httpd.conf; then
+        echo "Include /etc/httpd/phpMyAdmin.conf" >> /etc/httpd/httpd.conf
+fi
+if [ -f /var/lock/subsys/httpd ]; then
+	/usr/sbin/apachectl restart 1>&2
+fi
+
+%preun
+if [ "$1" = "0" ]; then
+	umask 027
+	grep -v "^Include.*phpMyAdmin.conf" /etc/httpd/httpd.conf > \
+                /etc/httpd/httpd.conf.tmp
+        mv -f /etc/httpd/httpd.conf.tmp /etc/httpd/httpd.conf
+	if [ -f /var/lock/subsys/httpd ]; then
+		/usr/sbin/apachectl restart 1>&2
+	fi
+fi
+
+%triggerpostun -- phpMyAdmin <= 2.5.3-1
+if [ -f /home/services/httpd/html/myadmin/config.inc.php.rpmsave ]; then
+	mv -f /home/services/httpd/html/myadmin/config.inc.php.rpmsave /etc/phpMyAdmin/config.inc.php
+else
+    if [ -f /home/httpd/html/myadmin/config.inc.php.rpmsave ]; then
+	mv -f /home/httpd/html/myadmin/config.inc.php.rpmsave /etc/phpMyAdmin/config.inc.php
+    fi
+fi
 
 %files
 %defattr(644,root,root,755)
 %doc Documentation.* ANNOUNCE.txt CREDITS ChangeLog INSTALL README TODO docSQL
-%attr(640,root,http) %config(noreplace) %verify(not size mtime md5) %{_myadmindir}/config.inc.php
+%dir %{_sysconfdir}
+%attr(640,root,http) %config(noreplace) %verify(not size mtime md5) %{_sysconfdir}/*
+%config(noreplace) %verify(not size mtime md5) /etc/httpd/%{name}.conf
 %dir %{_myadmindir}
 %{_myadmindir}/css
 %{_myadmindir}/images
@@ -85,5 +123,4 @@ rm -rf $RPM_BUILD_ROOT
 %{_myadmindir}/badwords.txt
 %{_myadmindir}/*.css
 %{_myadmindir}/*.html
-%{_myadmindir}/[!c]*.php
-%{_myadmindir}/c[!o]*.php
+%{_myadmindir}/*.php
