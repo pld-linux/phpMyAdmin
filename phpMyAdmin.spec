@@ -1,5 +1,5 @@
-Summary:	phpMyAdmin - web-based mysql administration
-Summary(pl):	phpMyAdmin - administracja bazami mysql przez WWW
+Summary:	phpMyAdmin - web-based MySQL administration
+Summary(pl):	phpMyAdmin - administracja bazami MySQL przez WWW
 Name:		phpMyAdmin
 Version:	2.2.1
 Release:	1
@@ -47,10 +47,9 @@ MySQL). Aktualnie phpMyAdmin potrafi:
   - zarz±dzaæ kluczami na rekordach
   - wczytywaæ tekst z plików do tabel
   - obs³ugiwaæ ponad 20 jêzyków
-  - zarz±dzaæ wieloma serverami i pojedyñczymi bazami danych
+  - zarz±dzaæ wieloma serwerami i pojedyñczymi bazami danych
   - eksportowaæ i importowaæ dane do warto¶ci CSV
   - tworzyæ i czytaæ zrzuty tabel
-
 
 %prep
 %setup -q 
@@ -78,7 +77,7 @@ rm -rf $RPM_BUILD_ROOT
 %defattr(644,root,root,755)
 %doc *.gz
 %dir %{_myadmindir}
-%config(noreplace) %{_myadmindir}/config.inc.php
+%attr(640,root,http) %config(noreplace) %verify(not size mtime md5) %{_myadmindir}/config.inc.php
 %{_myadmindir}/d*.php
 %{_myadmindir}/footer.inc.php
 %{_myadmindir}/header.inc.php
