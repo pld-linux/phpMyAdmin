@@ -109,14 +109,9 @@ else
 	mv -f /home/httpd/html/myadmin/config.inc.php.rpmsave /etc/phpMyAdmin/config.inc.php
     fi
 fi
-for i in `grep -R \/home\/httpd\/html\/myadmin /etc/httpd/* |cut -d : -f 1 | uniq`; do
+for i in `grep -lr "/home/\(services/\)*httpd/html/myadmin" /etc/httpd/* | uniq`; do
 	cp $i $i.backup
 	perl -pi -e "s#/home/httpd/html/myadmin#%{_myadmindir}#g" $i
-	echo "File changed by trigger: $i (backup: $i.backup)"
-done
-for i in `grep -R \/home\/services\/httpd\/html\/myadmin  /etc/httpd/* |cut -d : -f 1 | uniq`; do 
-	cp $i $i.backup
-	perl -pi -e "s#/home/services/httpd/html/myadmin#%{_myadmindir}#g" $i
 	echo "File changed by trigger: $i (backup: $i.backup)"
 done
 if [ -f /var/lock/subsys/httpd ]; then
