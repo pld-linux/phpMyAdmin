@@ -59,7 +59,7 @@ MySQL). Aktualnie phpMyAdmin potrafi:
   - zarz±dzaæ kluczami na rekordach
   - wczytywaæ tekst z plików do tabel
   - obs³ugiwaæ ponad 20 jêzyków
-  - zarz±dzaæ wieloma serwerami i pojedyñczymi bazami danych
+  - zarz±dzaæ wieloma serwerami i pojedynczymi bazami danych
   - eksportowaæ i importowaæ dane do warto¶ci CSV
   - tworzyæ i czytaæ zrzuty tabel
 
