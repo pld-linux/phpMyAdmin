@@ -1,3 +1,4 @@
+# SECURITY: arbitrary command execution (in < 2.6.0-pl2)
 Summary:	phpMyAdmin - web-based MySQL administration
 Summary(pl):	phpMyAdmin - administracja bazami MySQL przez WWW
 Name:		phpMyAdmin
