@@ -5,6 +5,7 @@ Version:	2.5.0
 Release:	1
 License:	GPL v2
 Group:		Applications/Databases/Interfaces
+# Source0-md5:	d64b1e6a630ad8f218196d16c948854e
 Source0:	http://dl.sourceforge.net/phpmyadmin/%{name}-%{version}-php.tar.bz2
 Patch0:		%{name}-config.patch
 URL:		http://www.phpmyadmin.net/
