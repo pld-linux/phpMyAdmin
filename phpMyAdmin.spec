@@ -1,20 +1,22 @@
 Summary:	phpMyAdmin - web-based MySQL administration
 Summary(pl):	phpMyAdmin - administracja bazami MySQL przez WWW
 Name:		phpMyAdmin
-Version:	2.4.0
-Release:	2
+Version:	2.5.1
+Release:	1
 License:	GPL v2
 Group:		Applications/Databases/Interfaces
+# Source0-md5:	746f4a515bd0a8d7a71a6e5bdb68b601
 Source0:	http://dl.sourceforge.net/phpmyadmin/%{name}-%{version}-php.tar.bz2
 Patch0:		%{name}-config.patch
 URL:		http://www.phpmyadmin.net/
 Requires:	mysql
 Requires:	php-mysql
+Requires:	php
 Requires:	webserver
 Buildarch:	noarch
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
-%define		_myadmindir	/home/services/httpd/html/myadmin
+%define		_myadmindir	/home/httpd/html/myadmin
 
 %description
 phpMyAdmin can administer a whole MySQL-server (needs a super-user)
