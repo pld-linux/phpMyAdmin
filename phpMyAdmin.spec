@@ -2,7 +2,7 @@ Summary:	phpMyAdmin - web-based MySQL administration
 Summary(pl):	phpMyAdmin - administracja bazami MySQL przez WWW
 Name:		phpMyAdmin
 Version:	2.5.3
-Release:	2.9
+Release:	3
 License:	GPL v2
 Group:		Applications/Databases/Interfaces
 Source0:	http://dl.sourceforge.net/phpmyadmin/%{name}-%{version}-php.tar.bz2
@@ -111,7 +111,8 @@ else
 fi
 for i in `grep -lr "/home/\(services/\)*httpd/html/myadmin" /etc/httpd/*`; do
 	cp $i $i.backup
-	perl -pi -e "s#/home/httpd/html/myadmin#%{_myadmindir}#g" $i
+	%{__perl} -pi -e "s#/home/httpd/html/myadmin#%{_myadmindir}#g" $i
+	%{__perl} -pi -e "s#/home/services/httpd/html/myadmin#%{_myadmindir}#g" $i
 	echo "File changed by trigger: $i (backup: $i.backup)"
 done
 if [ -f /var/lock/subsys/httpd ]; then
