@@ -2,7 +2,7 @@ Summary:	phpMyAdmin - web-based MySQL administration
 Summary(pl):	phpMyAdmin - administracja bazami MySQL przez WWW
 Name:		phpMyAdmin
 Version:	2.2.3
-Release:	1
+Release:	2
 License:	GPL v2
 Group:		Applications/Databases/Interfaces
 Group(de):	Applikationen/Dateibanken/Schnittstellen
@@ -57,7 +57,7 @@ MySQL). Aktualnie phpMyAdmin potrafi:
 
 %install
 rm -rf $RPM_BUILD_ROOT
-install -d $RPM_BUILD_ROOT%{_myadmindir}/{lang,images,libraries}
+install -d $RPM_BUILD_ROOT%{_myadmindir}/{lang,images,libraries,libraries/auth}
 
 cp *.php $RPM_BUILD_ROOT%{_myadmindir}
 cp *.html $RPM_BUILD_ROOT%{_myadmindir}
@@ -67,11 +67,12 @@ cp images/*.png $RPM_BUILD_ROOT%{_myadmindir}/images
 cp lang/*.php $RPM_BUILD_ROOT%{_myadmindir}/lang
 cp libraries/*.js $RPM_BUILD_ROOT%{_myadmindir}/libraries
 cp libraries/*.php $RPM_BUILD_ROOT%{_myadmindir}/libraries
+cp libraries/auth/*.php $RPM_BUILD_ROOT%{_myadmindir}/libraries/auth
 
 gzip -9nf Documentation.txt ANNOUNCE.txt README TODO ChangeLog
 
 %clean
-rm -rf $RPM_BUILD_ROOT
+#rm -rf $RPM_BUILD_ROOT
 
 %files
 %defattr(644,root,root,755)
