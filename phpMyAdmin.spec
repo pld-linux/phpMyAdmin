@@ -18,7 +18,7 @@ Requires:	php-mysql
 Requires:	php-pcre
 Requires:	php
 Requires:	webserver
-Buildarch:	noarch
+BuildArch:	noarch
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %define		_myadmindir	%{_datadir}/%{name}
