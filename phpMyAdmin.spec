@@ -68,5 +68,12 @@ rm -rf $RPM_BUILD_ROOT
 %files
 %defattr(644,root,root,755)
 %doc Documentation.txt ANNOUNCE.txt README TODO ChangeLog
+%dir %{_myadmindir}
 %attr(640,root,http) %config(noreplace) %verify(not size mtime md5) %{_myadmindir}/config.inc.php
-%{_myadmindir}
+%{_myadmindir}/images
+%{_myadmindir}/lang
+%{_myadmindir}/libraries
+%{_myadmindir}/badwords.txt
+%{_myadmindir}/*.html
+%{_myadmindir}/[^c]*.php
+%{_myadmindir}/c[^o]*.php
