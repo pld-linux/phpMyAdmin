@@ -51,21 +51,16 @@ MySQL). Aktualnie phpMyAdmin potrafi:
 
 %prep
 %setup -q
-%build
 
 %install
 rm -rf $RPM_BUILD_ROOT
 install -d $RPM_BUILD_ROOT%{_myadmindir}/{lang,images,libraries,libraries/auth}
 
-cp *.php $RPM_BUILD_ROOT%{_myadmindir}
-cp *.html $RPM_BUILD_ROOT%{_myadmindir}
-cp badwords.txt $RPM_BUILD_ROOT%{_myadmindir}
-cp images/*.gif $RPM_BUILD_ROOT%{_myadmindir}/images
-cp images/*.png $RPM_BUILD_ROOT%{_myadmindir}/images
-cp lang/*.php $RPM_BUILD_ROOT%{_myadmindir}/lang
-cp libraries/*.js $RPM_BUILD_ROOT%{_myadmindir}/libraries
-cp libraries/*.php $RPM_BUILD_ROOT%{_myadmindir}/libraries
-cp libraries/auth/*.php $RPM_BUILD_ROOT%{_myadmindir}/libraries/auth
+install *.php *.html badwords.txt $RPM_BUILD_ROOT%{_myadmindir}
+install images/*.{gif,png} $RPM_BUILD_ROOT%{_myadmindir}/images
+install lang/*.php $RPM_BUILD_ROOT%{_myadmindir}/lang
+install libraries/*.{js,php} $RPM_BUILD_ROOT%{_myadmindir}/libraries
+install libraries/auth/*.php $RPM_BUILD_ROOT%{_myadmindir}/libraries/auth
 
 gzip -9nf Documentation.txt ANNOUNCE.txt README TODO ChangeLog
 
