@@ -5,8 +5,6 @@ Version:	2.2.3
 Release:	2
 License:	GPL v2
 Group:		Applications/Databases/Interfaces
-Group(de):	Applikationen/Dateibanken/Schnittstellen
-Group(pl):	Aplikacje/Bazy danych/Interfejsy
 Source0:	http://prdownloads.sourceforge.net/phpmyadmin/%{name}-%{version}-php.tar.bz2
 URL:		http://sourceforge.net/projects/phpmyadmin/
 Requires:	mysql
