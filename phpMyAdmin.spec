@@ -1,7 +1,7 @@
 Summary:	phpMyAdmin - web-based MySQL administration
 Summary(pl):	phpMyAdmin - administracja bazami MySQL przez WWW
 Name:		phpMyAdmin
-%define _rc	rc1
+%define	_rc	rc1
 Version:	2.5.6
 Release:	0.%{_rc}.1
 License:	GPL v2
@@ -85,7 +85,7 @@ rm -rf $RPM_BUILD_ROOT
 
 %post
 if [ -f /etc/httpd/httpd.conf ] && ! grep -q "^Include.*phpMyAdmin.conf" /etc/httpd/httpd.conf; then
-        echo "Include /etc/httpd/phpMyAdmin.conf" >> /etc/httpd/httpd.conf
+	echo "Include /etc/httpd/phpMyAdmin.conf" >> /etc/httpd/httpd.conf
 fi
 if [ -f /var/lock/subsys/httpd ]; then
 	/usr/sbin/apachectl restart 1>&2
@@ -95,8 +95,8 @@ fi
 if [ "$1" = "0" ]; then
 	umask 027
 	grep -v "^Include.*phpMyAdmin.conf" /etc/httpd/httpd.conf > \
-                /etc/httpd/httpd.conf.tmp
-        mv -f /etc/httpd/httpd.conf.tmp /etc/httpd/httpd.conf
+		/etc/httpd/httpd.conf.tmp
+	mv -f /etc/httpd/httpd.conf.tmp /etc/httpd/httpd.conf
 	if [ -f /var/lock/subsys/httpd ]; then
 		/usr/sbin/apachectl restart 1>&2
 	fi
@@ -106,9 +106,9 @@ fi
 if [ -f /home/services/httpd/html/myadmin/config.inc.php.rpmsave ]; then
 	mv -f /home/services/httpd/html/myadmin/config.inc.php.rpmsave /etc/phpMyAdmin/config.inc.php
 else
-    if [ -f /home/httpd/html/myadmin/config.inc.php.rpmsave ]; then
-	mv -f /home/httpd/html/myadmin/config.inc.php.rpmsave /etc/phpMyAdmin/config.inc.php
-    fi
+	if [ -f /home/httpd/html/myadmin/config.inc.php.rpmsave ]; then
+		mv -f /home/httpd/html/myadmin/config.inc.php.rpmsave /etc/phpMyAdmin/config.inc.php
+	fi
 fi
 for i in `grep -lr "/home/\(services/\)*httpd/html/myadmin" /etc/httpd/*`; do
 	cp $i $i.backup
