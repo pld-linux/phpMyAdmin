@@ -5,8 +5,8 @@ Version:	2.4.0
 Release:	1
 License:	GPL v2
 Group:		Applications/Databases/Interfaces
-Source0:	http://prdownloads.sourceforge.net/phpmyadmin/%{name}-%{version}-php.tar.bz2
-URL:		http://www.phpmyadmin.net
+Source0:	http://dl.sourceforge.net/phpmyadmin/%{name}-%{version}-php.tar.bz2
+URL:		http://www.phpmyadmin.net/
 Requires:	mysql
 Requires:	php-mysql
 Requires:	webserver
@@ -75,5 +75,5 @@ rm -rf $RPM_BUILD_ROOT
 %{_myadmindir}/libraries
 %{_myadmindir}/badwords.txt
 %{_myadmindir}/*.html
-%{_myadmindir}/[^c]*.php
-%{_myadmindir}/c[^o]*.php
+%{_myadmindir}/[!c]*.php
+%{_myadmindir}/c[!o]*.php
