@@ -5,11 +5,13 @@ Name:		phpMyAdmin
 %define		_rel	3
 # NOTE: bump _rel with every new patchlevel
 Version:	2.6.0
-Release:	0.%{_pl}.%{_rel}
+#Release:	0.%{_pl}.%{_rel}
+Release:	1
 License:	GPL v2
 Group:		Applications/Databases/Interfaces
-Source0:	http://dl.sourceforge.net/phpmyadmin/%{name}-%{version}-%{_pl}.tar.bz2
-# Source0-md5:	134fcb19e76a4bbab121d4aeefd2422b
+#Source0:	http://dl.sourceforge.net/phpmyadmin/%{name}-%{version}-%{_pl}.tar.bz2
+Source0:	http://dl.sourceforge.net/phpmyadmin/%{name}-%{version}.tar.bz2
+# Source0-md5:	7d8dc68a88aca0c5f36c5d8996bb563f
 Source1:	%{name}.conf
 Patch0:		%{name}-config.patch
 URL:		http://www.phpmyadmin.net/
@@ -60,7 +62,8 @@ MySQL). Aktualnie phpMyAdmin potrafi:
   - tworzyæ i czytaæ zrzuty tabel
 
 %prep
-%setup -q -n %{name}-%{version}-%{_pl}
+#%setup -q -n %{name}-%{version}-%{_pl}
+%setup -q -n %{name}-%{version}
 %patch -p1
 
 %install
