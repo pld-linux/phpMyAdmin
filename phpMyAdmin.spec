@@ -14,6 +14,7 @@ URL:		http://www.phpmyadmin.net/
 BuildRequires:	rpm-php-pearprov
 #Requires:	mysql
 Requires:	php-mysql
+Requires:	php-pcre
 Requires:	php
 Requires:	webserver
 Buildarch:	noarch
