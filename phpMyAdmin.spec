@@ -10,6 +10,7 @@ Patch0:		%{name}-config.patch
 URL:		http://www.phpmyadmin.net/
 Requires:	mysql
 Requires:	php-mysql
+Requires:	php
 Requires:	webserver
 Buildarch:	noarch
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
