@@ -50,7 +50,7 @@ MySQL). Aktualnie phpMyAdmin potrafi:
   - tworzyæ i czytaæ zrzuty tabel
 
 %prep
-%setup -q 
+%setup -q
 %build
 
 %install
