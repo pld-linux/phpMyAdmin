@@ -4,7 +4,7 @@ Summary:	phpMyAdmin - web-based MySQL administration
 Summary(pl):	phpMyAdmin - administracja bazami MySQL przez WWW
 Name:		phpMyAdmin
 Version:	2.5.2
-Release:	0.%{_rc}.1
+Release:	0.%{_rc}.2
 License:	GPL v2
 Group:		Applications/Databases/Interfaces
 Source0:	http://dl.sourceforge.net/phpmyadmin/%{name}-%{version}-%{_rc}-php.tar.bz2
@@ -60,11 +60,12 @@ MySQL). Aktualnie phpMyAdmin potrafi:
 
 %install
 rm -rf $RPM_BUILD_ROOT
-install -d $RPM_BUILD_ROOT%{_myadmindir}/{lang,images,libraries,libraries/auth}
+install -d $RPM_BUILD_ROOT%{_myadmindir}/{css,lang,images,libraries,libraries/auth}
 
-install *.php *.html badwords.txt $RPM_BUILD_ROOT%{_myadmindir}
+install *.php *.html *.css badwords.txt $RPM_BUILD_ROOT%{_myadmindir}
 install images/*.{gif,png} $RPM_BUILD_ROOT%{_myadmindir}/images
 install lang/*.php $RPM_BUILD_ROOT%{_myadmindir}/lang
+install css/* $RPM_BUILD_ROOT%{_myadmindir}/css
 install libraries/*.{js,php} $RPM_BUILD_ROOT%{_myadmindir}/libraries
 install libraries/auth/*.php $RPM_BUILD_ROOT%{_myadmindir}/libraries/auth
 
@@ -74,12 +75,14 @@ rm -rf $RPM_BUILD_ROOT
 %files
 %defattr(644,root,root,755)
 %doc Documentation.txt ANNOUNCE.txt README TODO ChangeLog
-%dir %{_myadmindir}
 %attr(640,root,http) %config(noreplace) %verify(not size mtime md5) %{_myadmindir}/config.inc.php
+%dir %{_myadmindir}
+%{_myadmindir}/css
 %{_myadmindir}/images
 %{_myadmindir}/lang
 %{_myadmindir}/libraries
 %{_myadmindir}/badwords.txt
+%{_myadmindir}/*.css
 %{_myadmindir}/*.html
 %{_myadmindir}/[!c]*.php
 %{_myadmindir}/c[!o]*.php
