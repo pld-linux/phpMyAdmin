@@ -10,7 +10,7 @@ Group(pl):	Aplikacje/Bazy danych/Interfejsy
 Source0:	http://prdownloads.sourceforge.net/phpmyadmin/%{name}-%{version}-php.tar.bz2
 URL:		http://sourceforge.net/projects/phpmyadmin/
 Requires:	mysql
-Requires:	php >= 4
+Requires:	php-mysql
 Requires:	webserver
 Buildarch:	noarch
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
