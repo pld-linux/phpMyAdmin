@@ -1,15 +1,15 @@
 Summary:	phpMyAdmin - web-based MySQL administration
 Summary(pl):	phpMyAdmin - administracja bazami MySQL przez WWW
 Name:		phpMyAdmin
-%define		_pl	pl1
-%define		_rel	3	
+%define		_pl	rc2
+%define		_rel	2
 # NOTE: bump _rel with every new patchlevel
-Version:	2.5.7
-Release:	%{_rel}.%{_pl}
+Version:	2.6.0
+Release:	0.%{_pl}.%{_rel}
 License:	GPL v2
 Group:		Applications/Databases/Interfaces
 Source0:	http://dl.sourceforge.net/phpmyadmin/%{name}-%{version}-%{_pl}.tar.bz2
-# Source0-md5:	93b7c7f3dfcfd6df9c2ea26f31a51772
+# Source0-md5:	134fcb19e76a4bbab121d4aeefd2422b
 Source1:	%{name}.conf
 Patch0:		%{name}-config.patch
 URL:		http://www.phpmyadmin.net/
@@ -65,16 +65,22 @@ MySQL). Aktualnie phpMyAdmin potrafi:
 
 %install
 rm -rf $RPM_BUILD_ROOT
-install -d $RPM_BUILD_ROOT%{_myadmindir}/{css,lang,images,libraries/{auth,export}} \
+install -d $RPM_BUILD_ROOT%{_myadmindir}/{css,lang,libraries/{auth,export,dbg,dbi,transformations}} \
 	$RPM_BUILD_ROOT{%{_sysconfdir},/etc/httpd}
 
 install *.php *.html *.css $RPM_BUILD_ROOT%{_myadmindir}
-install images/*.{gif,png} $RPM_BUILD_ROOT%{_myadmindir}/images
+#install images/*.{gif,png} $RPM_BUILD_ROOT%{_myadmindir}/images
 install lang/*.php $RPM_BUILD_ROOT%{_myadmindir}/lang
+cp -rf themes  $RPM_BUILD_ROOT%{_myadmindir}/
 install css/* $RPM_BUILD_ROOT%{_myadmindir}/css
 install libraries/*.{js,php} $RPM_BUILD_ROOT%{_myadmindir}/libraries
 install libraries/auth/*.php $RPM_BUILD_ROOT%{_myadmindir}/libraries/auth
 install libraries/export/*.php $RPM_BUILD_ROOT%{_myadmindir}/libraries/export
+install libraries/dbg/*.php $RPM_BUILD_ROOT%{_myadmindir}/libraries/dbg
+install libraries/dbi/*.php $RPM_BUILD_ROOT%{_myadmindir}/libraries/dbi
+install libraries/transformations/*.php $RPM_BUILD_ROOT%{_myadmindir}/libraries/transformations
+
+cp -rf scripts $RPM_BUILD_ROOT%{_myadmindir}
 
 install config.inc.php $RPM_BUILD_ROOT%{_sysconfdir}
 ln -sf %{_sysconfdir}/config.inc.php $RPM_BUILD_ROOT%{_myadmindir}/config.inc.php
@@ -135,7 +141,8 @@ fi
 %config(noreplace) %verify(not size mtime md5) /etc/httpd/%{name}.conf
 %dir %{_myadmindir}
 %{_myadmindir}/css
-%{_myadmindir}/images
+%{_myadmindir}/themes
+%{_myadmindir}/scripts
 %{_myadmindir}/lang
 %{_myadmindir}/libraries
 %{_myadmindir}/*.css
