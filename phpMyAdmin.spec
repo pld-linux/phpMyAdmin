@@ -79,7 +79,7 @@ install libraries/export/*.php $RPM_BUILD_ROOT%{_myadmindir}/libraries/export
 install config.inc.php $RPM_BUILD_ROOT%{_sysconfdir}
 ln -sf %{_sysconfdir}/config.inc.php $RPM_BUILD_ROOT%{_myadmindir}/config.inc.php
 
-install %SOURCE1 $RPM_BUILD_ROOT/etc/httpd/%{name}.conf
+install %{SOURCE1} $RPM_BUILD_ROOT/etc/httpd/%{name}.conf
 
 %clean
 rm -rf $RPM_BUILD_ROOT
