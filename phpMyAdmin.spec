@@ -2,7 +2,7 @@ Summary:	phpMyAdmin - web-based MySQL administration
 Summary(pl):	phpMyAdmin - administracja bazami MySQL przez WWW
 Name:		phpMyAdmin
 %define		_pl	rc2
-%define		_rel	2
+%define		_rel	3
 # NOTE: bump _rel with every new patchlevel
 Version:	2.6.0
 Release:	0.%{_pl}.%{_rel}
@@ -93,11 +93,14 @@ rm -rf $RPM_BUILD_ROOT
 %post
 if [ -f /etc/httpd/httpd.conf ] && ! grep -q "^Include.*%{name}.conf" /etc/httpd/httpd.conf; then
 	echo "Include /etc/httpd/%{name}.conf" >> /etc/httpd/httpd.conf
+	if [ -f /var/lock/subsys/httpd ]; then
+		/usr/sbin/apachectl restart 1>&2
+	fi
 elif [ -d /etc/httpd/httpd.conf ]; then
 	ln -sf /etc/httpd/%{name}.conf /etc/httpd/httpd.conf/99_%{name}.conf
-fi
-if [ -f /var/lock/subsys/httpd ]; then
-	/usr/sbin/apachectl restart 1>&2
+	if [ -f /var/lock/subsys/httpd ]; then
+		/usr/sbin/apachectl restart 1>&2
+	fi
 fi
 
 %preun
@@ -109,9 +112,9 @@ if [ "$1" = "0" ]; then
 		grep -v "^Include.*%{name}.conf" /etc/httpd/httpd.conf > \
 			/etc/httpd/httpd.conf.tmp
 		mv -f /etc/httpd/httpd.conf.tmp /etc/httpd/httpd.conf
-		if [ -f /var/lock/subsys/httpd ]; then
-		    /usr/sbin/apachectl restart 1>&2
-		fi
+	fi
+	if [ -f /var/lock/subsys/httpd ]; then
+	    /usr/sbin/apachectl restart 1>&2
 	fi
 fi
 
