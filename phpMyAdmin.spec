@@ -1,20 +1,26 @@
+
+#%define		_rc	rc2
 Summary:	phpMyAdmin - web-based MySQL administration
 Summary(pl):	phpMyAdmin - administracja bazami MySQL przez WWW
 Name:		phpMyAdmin
-Version:	2.4.0
-Release:	2
+Version:	2.5.2
+Release:	1
 License:	GPL v2
 Group:		Applications/Databases/Interfaces
 Source0:	http://dl.sourceforge.net/phpmyadmin/%{name}-%{version}-php.tar.bz2
+# Source0-md5:	c8998f5ef17b8ee9cbf6ed67e9441359
 Patch0:		%{name}-config.patch
 URL:		http://www.phpmyadmin.net/
-Requires:	mysql
+BuildRequires:	rpm-php-pearprov
+#Requires:	mysql
 Requires:	php-mysql
+Requires:	php-pcre
+Requires:	php
 Requires:	webserver
 Buildarch:	noarch
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
-%define		_myadmindir	/home/services/httpd/html/myadmin
+%define		_myadmindir	/home/httpd/html/myadmin
 
 %description
 phpMyAdmin can administer a whole MySQL-server (needs a super-user)
@@ -56,26 +62,30 @@ MySQL). Aktualnie phpMyAdmin potrafi:
 
 %install
 rm -rf $RPM_BUILD_ROOT
-install -d $RPM_BUILD_ROOT%{_myadmindir}/{lang,images,libraries,libraries/auth}
+install -d $RPM_BUILD_ROOT%{_myadmindir}/{css,lang,images,libraries/{auth,export}}
 
-install *.php *.html badwords.txt $RPM_BUILD_ROOT%{_myadmindir}
+install *.php *.html *.css badwords.txt $RPM_BUILD_ROOT%{_myadmindir}
 install images/*.{gif,png} $RPM_BUILD_ROOT%{_myadmindir}/images
 install lang/*.php $RPM_BUILD_ROOT%{_myadmindir}/lang
+install css/* $RPM_BUILD_ROOT%{_myadmindir}/css
 install libraries/*.{js,php} $RPM_BUILD_ROOT%{_myadmindir}/libraries
 install libraries/auth/*.php $RPM_BUILD_ROOT%{_myadmindir}/libraries/auth
+install libraries/export/*.php $RPM_BUILD_ROOT%{_myadmindir}/libraries/export
 
 %clean
 rm -rf $RPM_BUILD_ROOT
 
 %files
 %defattr(644,root,root,755)
-%doc Documentation.txt ANNOUNCE.txt README TODO ChangeLog
-%dir %{_myadmindir}
+%doc Documentation.* ANNOUNCE.txt CREDITS ChangeLog INSTALL README TODO docSQL
 %attr(640,root,http) %config(noreplace) %verify(not size mtime md5) %{_myadmindir}/config.inc.php
+%dir %{_myadmindir}
+%{_myadmindir}/css
 %{_myadmindir}/images
 %{_myadmindir}/lang
 %{_myadmindir}/libraries
 %{_myadmindir}/badwords.txt
+%{_myadmindir}/*.css
 %{_myadmindir}/*.html
 %{_myadmindir}/[!c]*.php
 %{_myadmindir}/c[!o]*.php
