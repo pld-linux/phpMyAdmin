@@ -2,7 +2,7 @@ Summary:	phpMyAdmin - web-based MySQL administration
 Summary(pl):	phpMyAdmin - administracja bazami MySQL przez WWW
 Name:		phpMyAdmin
 Version:	2.5.3
-Release:	2
+Release:	2.9
 License:	GPL v2
 Group:		Applications/Databases/Interfaces
 Source0:	http://dl.sourceforge.net/phpmyadmin/%{name}-%{version}-php.tar.bz2
@@ -12,6 +12,7 @@ Patch0:		%{name}-config.patch
 URL:		http://www.phpmyadmin.net/
 BuildRequires:	rpm-php-pearprov
 #Requires:	mysql
+Requires(postun):	perl
 Requires:	php-mysql
 Requires:	php-pcre
 Requires:	php
@@ -100,13 +101,26 @@ if [ "$1" = "0" ]; then
 	fi
 fi
 
-%triggerpostun -- phpMyAdmin <= 2.5.3-1
+%triggerpostun -- phpMyAdmin <= 2.5.3-2
 if [ -f /home/services/httpd/html/myadmin/config.inc.php.rpmsave ]; then
 	mv -f /home/services/httpd/html/myadmin/config.inc.php.rpmsave /etc/phpMyAdmin/config.inc.php
 else
     if [ -f /home/httpd/html/myadmin/config.inc.php.rpmsave ]; then
 	mv -f /home/httpd/html/myadmin/config.inc.php.rpmsave /etc/phpMyAdmin/config.inc.php
     fi
+fi
+for i in `grep -R \/home\/httpd\/html\/myadmin /etc/httpd/* |cut -d : -f 1 | uniq`; do
+	cp $i $i.backup
+	perl -pi -e "s#/home/httpd/html/myadmin#%{_myadmindir}#g" $i
+	echo "File changed by trigger: $i (backup: $i.backup)"
+done
+for i in `grep -R \/home\/services\/httpd\/html\/myadmin  /etc/httpd/* |cut -d : -f 1 | uniq`; do 
+	cp $i $i.backup
+	perl -pi -e "s#/home/services/httpd/html/myadmin#%{_myadmindir}#g" $i
+	echo "File changed by trigger: $i (backup: $i.backup)"
+done
+if [ -f /var/lock/subsys/httpd ]; then
+	/usr/sbin/apachectl restart 1>&2
 fi
 
 %files
