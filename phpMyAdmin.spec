@@ -1,8 +1,8 @@
 Summary:	phpMyAdmin - web-based MySQL administration
 Summary(pl):	phpMyAdmin - administracja bazami MySQL przez WWW
 Name:		phpMyAdmin
-Version:	2.2.1
-Release:	3
+Version:	2.2.3
+Release:	1
 License:	GPL v2
 Group:		Applications/Databases/Interfaces
 Group(de):	Applikationen/Dateibanken/Schnittstellen
