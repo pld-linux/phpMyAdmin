@@ -2,10 +2,11 @@ Summary:	phpMyAdmin - web-based MySQL administration
 Summary(pl):	phpMyAdmin - administracja bazami MySQL przez WWW
 Name:		phpMyAdmin
 Version:	2.4.0
-Release:	1
+Release:	2
 License:	GPL v2
 Group:		Applications/Databases/Interfaces
 Source0:	http://dl.sourceforge.net/phpmyadmin/%{name}-%{version}-php.tar.bz2
+Patch0:		%{name}-config.patch
 URL:		http://www.phpmyadmin.net/
 Requires:	mysql
 Requires:	php-mysql
@@ -51,6 +52,7 @@ MySQL). Aktualnie phpMyAdmin potrafi:
 
 %prep
 %setup -q
+%patch -p1
 
 %install
 rm -rf $RPM_BUILD_ROOT
