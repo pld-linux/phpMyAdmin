@@ -8,7 +8,7 @@ Group:		Applications/Databases/Interfaces
 Group(de):	Applikationen/Dateibanken/Schnittstellen
 Group(pl):	Aplikacje/Bazy danych/Interfejsy
 Source0:	http://prdownloads.sourceforge.net/phpmyadmin/%{name}-%{version}-php.tar.bz2
-Url:		http://sourceforge.net/projects/phpmyadmin/
+URL:		http://sourceforge.net/projects/phpmyadmin/
 Requires:	mysql
 Requires:	php >= 4
 Requires:	webserver
@@ -58,7 +58,6 @@ MySQL). Aktualnie phpMyAdmin potrafi:
 
 %install
 rm -rf $RPM_BUILD_ROOT
-
 install -d $RPM_BUILD_ROOT%{_myadmindir}/{lang,images,libraries}
 
 cp *.php $RPM_BUILD_ROOT%{_myadmindir}
@@ -78,25 +77,23 @@ rm -rf $RPM_BUILD_ROOT
 %files
 %defattr(644,root,root,755)
 %doc *.gz
-%dir %attr(755,http,http) %{_myadmindir}
-%attr(640,http,http) %config(noreplace) %{_myadmindir}/config.inc.php
-%attr(644,http,http) %{_myadmindir}/d*.php
-%attr(644,http,http) %{_myadmindir}/footer.inc.php
-%attr(644,http,http) %{_myadmindir}/header.inc.php
-%attr(644,http,http) %{_myadmindir}/index.php
-%attr(644,http,http) %{_myadmindir}/l*.php
-%attr(644,http,http) %{_myadmindir}/main.php
-%attr(644,http,http) %{_myadmindir}/mult_submits.inc.php
-%attr(644,http,http) %{_myadmindir}/phpinfo.php
-%attr(644,http,http) %{_myadmindir}/read_dump.php
-%attr(644,http,http) %{_myadmindir}/s*.php
-%attr(644,http,http) %{_myadmindir}/tbl_*.php
-%attr(644,http,http) %{_myadmindir}/user_details.php
-%attr(644,http,http) %{_myadmindir}/badwords.txt
+%dir %{_myadmindir}
+%config(noreplace) %{_myadmindir}/config.inc.php
+%{_myadmindir}/d*.php
+%{_myadmindir}/footer.inc.php
+%{_myadmindir}/header.inc.php
+%{_myadmindir}/index.php
+%{_myadmindir}/l*.php
+%{_myadmindir}/main.php
+%{_myadmindir}/mult_submits.inc.php
+%{_myadmindir}/phpinfo.php
+%{_myadmindir}/read_dump.php
+%{_myadmindir}/s*.php
+%{_myadmindir}/tbl_*.php
+%{_myadmindir}/user_details.php
+%{_myadmindir}/badwords.txt
 
-%attr(644,http,http) %{_myadmindir}/*.html
-%attr(644,http,http) %{_myadmindir}/lang/*.php
-%attr(644,http,http) %{_myadmindir}/images/*.gif
-%attr(644,http,http) %{_myadmindir}/images/*.png
-%attr(644,http,http) %{_myadmindir}/libraries/*.js
-%attr(644,http,http) %{_myadmindir}/libraries/*.php
+%{_myadmindir}/*.html
+%{_myadmindir}/lang/*.php
+%{_myadmindir}/images
+%{_myadmindir}/libraries
