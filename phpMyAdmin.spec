@@ -1,3 +1,5 @@
+# NOTE:	currently apache configs are in /etc/httpd/httpd.conf/ directory
+#	but phpMyAdmin.conf is placed in /etc/httpd/
 Summary:	phpMyAdmin - web-based MySQL administration
 Summary(pl):	phpMyAdmin - administracja bazami MySQL przez WWW
 Name:		phpMyAdmin
@@ -13,7 +15,7 @@ Patch0:		%{name}-config.patch
 URL:		http://www.phpmyadmin.net/
 BuildRequires:	rpm-php-pearprov
 #Requires:	mysql
-Requires(postun):	perl
+Requires(postun):	perl-base
 Requires:	php-mysql
 Requires:	php-pcre
 Requires:	php
@@ -122,7 +124,7 @@ fi
 
 %files
 %defattr(644,root,root,755)
-%doc Documentation.* CREDITS ChangeLog INSTALL README TODO translators.html
+%doc Documentation.* CREDITS ChangeLog INSTALL README TODO translators.html scripts
 %dir %{_sysconfdir}
 %attr(640,root,http) %config(noreplace) %verify(not size mtime md5) %{_sysconfdir}/*
 %config(noreplace) %verify(not size mtime md5) /etc/httpd/%{name}.conf
