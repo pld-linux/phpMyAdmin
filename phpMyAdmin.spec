@@ -109,7 +109,7 @@ else
 	mv -f /home/httpd/html/myadmin/config.inc.php.rpmsave /etc/phpMyAdmin/config.inc.php
     fi
 fi
-for i in `grep -lr "/home/\(services/\)*httpd/html/myadmin" /etc/httpd/* | uniq`; do
+for i in `grep -lr "/home/\(services/\)*httpd/html/myadmin" /etc/httpd/*`; do
 	cp $i $i.backup
 	perl -pi -e "s#/home/httpd/html/myadmin#%{_myadmindir}#g" $i
 	echo "File changed by trigger: $i (backup: $i.backup)"
