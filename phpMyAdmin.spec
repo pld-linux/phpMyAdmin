@@ -88,6 +88,8 @@ rm -rf $RPM_BUILD_ROOT
 %post
 if [ -f /etc/httpd/httpd.conf ] && ! grep -q "^Include.*phpMyAdmin.conf" /etc/httpd/httpd.conf; then
 	echo "Include /etc/httpd/phpMyAdmin.conf" >> /etc/httpd/httpd.conf
+elif [ -d /etc/httpd/httpd.conf ]; then
+	mv -f /etc/httpd/%{name}.conf /etc/httpd/httpd.conf/99_%{name}.conf
 fi
 if [ -f /var/lock/subsys/httpd ]; then
 	/usr/sbin/apachectl restart 1>&2
@@ -96,11 +98,15 @@ fi
 %preun
 if [ "$1" = "0" ]; then
 	umask 027
-	grep -v "^Include.*phpMyAdmin.conf" /etc/httpd/httpd.conf > \
-		etc/httpd/httpd.conf.tmp
-	mv -f /etc/httpd/httpd.conf.tmp /etc/httpd/httpd.conf
-	if [ -f /var/lock/subsys/httpd ]; then
-		/usr/sbin/apachectl restart 1>&2
+	if [ -d /etc/httpd/httpd.conf ]; then
+	    rm -f /etc/httpd/httpd.conf/99_%{name}.conf
+	else
+		grep -v "^Include.*phpMyAdmin.conf" /etc/httpd/httpd.conf > \
+			etc/httpd/httpd.conf.tmp
+		mv -f /etc/httpd/httpd.conf.tmp /etc/httpd/httpd.conf
+		if [ -f /var/lock/subsys/httpd ]; then
+		    /usr/sbin/apachectl restart 1>&2
+		fi
 	fi
 fi
 
