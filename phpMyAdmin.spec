@@ -1,7 +1,7 @@
 Summary:	phpMyAdmin - web-based MySQL administration
 Summary(pl):	phpMyAdmin - administracja bazami MySQL przez WWW
 Name:		phpMyAdmin
-Version:	2.2.6
+Version:	2.3.0
 Release:	1
 License:	GPL v2
 Group:		Applications/Databases/Interfaces
@@ -62,31 +62,11 @@ install lang/*.php $RPM_BUILD_ROOT%{_myadmindir}/lang
 install libraries/*.{js,php} $RPM_BUILD_ROOT%{_myadmindir}/libraries
 install libraries/auth/*.php $RPM_BUILD_ROOT%{_myadmindir}/libraries/auth
 
-gzip -9nf Documentation.txt ANNOUNCE.txt README TODO ChangeLog
-
 %clean
 rm -rf $RPM_BUILD_ROOT
 
 %files
 %defattr(644,root,root,755)
-%doc *.gz
-%dir %{_myadmindir}
+%doc Documentation.txt ANNOUNCE.txt README TODO ChangeLog
 %attr(640,root,http) %config(noreplace) %verify(not size mtime md5) %{_myadmindir}/config.inc.php
-%{_myadmindir}/d*.php
-%{_myadmindir}/footer.inc.php
-%{_myadmindir}/header.inc.php
-%{_myadmindir}/index.php
-%{_myadmindir}/l*.php
-%{_myadmindir}/main.php
-%{_myadmindir}/mult_submits.inc.php
-%{_myadmindir}/phpinfo.php
-%{_myadmindir}/read_dump.php
-%{_myadmindir}/s*.php
-%{_myadmindir}/tbl_*.php
-%{_myadmindir}/user_details.php
-%{_myadmindir}/badwords.txt
-
-%{_myadmindir}/*.html
-%{_myadmindir}/lang/*.php
-%{_myadmindir}/images
-%{_myadmindir}/libraries
+%{_myadmindir}
