@@ -16,7 +16,7 @@ Requires:	webserver
 Buildarch:	noarch
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
-%define		_myadmindir	/home/services/httpd/html/myadmin
+%define		_myadmindir	/home/httpd/html/myadmin
 
 %description
 phpMyAdmin can administer a whole MySQL-server (needs a super-user)
