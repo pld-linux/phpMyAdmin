@@ -139,8 +139,8 @@ fi
 %defattr(644,root,root,755)
 %doc Documentation.* CREDITS ChangeLog INSTALL README TODO translators.html scripts
 %dir %{_sysconfdir}
-%attr(640,root,http) %config(noreplace) %verify(not size mtime md5) %{_sysconfdir}/*
-%config(noreplace) %verify(not size mtime md5) /etc/httpd/%{name}.conf
+%attr(640,root,http) %config(noreplace) %verify(not md5 mtime size) %{_sysconfdir}/*
+%config(noreplace) %verify(not md5 mtime size) /etc/httpd/%{name}.conf
 %dir %{_myadmindir}
 %{_myadmindir}/css
 %{_myadmindir}/themes
