@@ -1,3 +1,5 @@
+# TODO
+# - http://www.gentoo.org/security/en/glsa/glsa-200504-30.xml
 Summary:	phpMyAdmin - web-based MySQL administration
 Summary(pl):	phpMyAdmin - administracja bazami MySQL przez WWW
 Name:		phpMyAdmin
