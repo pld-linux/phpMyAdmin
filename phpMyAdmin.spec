@@ -6,7 +6,7 @@ Name:		phpMyAdmin
 Version:	2.6.4
 %define		_pl	pl1
 #Release:	1
-Release:	1.%{_pl}.1
+Release:	2.%{_pl}.1
 License:	GPL v2
 Group:		Applications/Databases/Interfaces
 Source0:	http://dl.sourceforge.net/phpmyadmin/%{name}-%{version}-%{_pl}.tar.bz2
