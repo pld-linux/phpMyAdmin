@@ -3,12 +3,12 @@ Summary(pl):	phpMyAdmin - administracja bazami MySQL przez WWW
 Name:		phpMyAdmin
 # NOTE: bump _rel with every new patchlevel
 Version:	2.6.4
-%define		_pl	pl3
+%define		_pl	pl4
 Release:	1.%{_pl}.1
 License:	GPL v2
 Group:		Applications/Databases/Interfaces
 Source0:	http://dl.sourceforge.net/phpmyadmin/%{name}-%{version}-%{_pl}.tar.bz2
-# Source0-md5:	66f7287ce59d2f41ec180a04d5a3094a
+# Source0-md5:	a49885849bec79d35f6bdae73cdb813d
 #Source0:	http://dl.sourceforge.net/phpmyadmin/%{name}-%{version}.tar.bz2
 Source1:	%{name}.conf
 Patch0:		%{name}-config.patch
