@@ -13,11 +13,11 @@ Source0:	http://dl.sourceforge.net/phpmyadmin/%{name}-%{version}-%{_pl}.tar.bz2
 Source1:	%{name}.conf
 Patch0:		%{name}-config.patch
 URL:		http://www.phpmyadmin.net/
-#Requires:	mysql
 Requires(postun):	perl-base
+#Requires:	mysql
+Requires:	php
 Requires:	php-mysql
 Requires:	php-pcre
-Requires:	php
 Requires:	webserver
 BuildArch:	noarch
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
