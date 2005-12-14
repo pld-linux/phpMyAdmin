@@ -14,11 +14,11 @@ Source1:	%{name}.conf
 Patch0:		%{name}-config.patch
 URL:		http://www.phpmyadmin.net/
 Requires(postun):	perl-base
-#Requires:	mysql
 Requires:	php
 Requires:	php-mysql
 Requires:	php-pcre
 Requires:	webserver
+#Suggests:	php-mbstring
 BuildArch:	noarch
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
@@ -70,9 +70,8 @@ install -d $RPM_BUILD_ROOT%{_myadmindir}/{css,lang,libraries/{auth,export,dbg,db
 	$RPM_BUILD_ROOT{%{_sysconfdir},/etc/httpd}
 
 install *.php *.html *.css $RPM_BUILD_ROOT%{_myadmindir}
-#install images/*.{gif,png} $RPM_BUILD_ROOT%{_myadmindir}/images
 install lang/*.php $RPM_BUILD_ROOT%{_myadmindir}/lang
-cp -rf themes $RPM_BUILD_ROOT%{_myadmindir}/
+cp -rf themes $RPM_BUILD_ROOT%{_myadmindir}
 install css/* $RPM_BUILD_ROOT%{_myadmindir}/css
 install libraries/*.{js,php} $RPM_BUILD_ROOT%{_myadmindir}/libraries
 install libraries/auth/*.php $RPM_BUILD_ROOT%{_myadmindir}/libraries/auth
