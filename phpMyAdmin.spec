@@ -1,10 +1,13 @@
+# TODO
+# - convert to webapps
 Summary:	phpMyAdmin - web-based MySQL administration
 Summary(pl):	phpMyAdmin - administracja bazami MySQL przez WWW
 Name:		phpMyAdmin
 Version:	2.7.0
 %define		_pl	pl1
-#Release:	1
-Release:	2.%{_pl}.1
+# release 2 (1 is for Ra)
+%define		_rel 2
+Release:	%{_pl}.%{_rel}
 License:	GPL v2
 Group:		Applications/Databases/Interfaces
 Source0:	http://dl.sourceforge.net/phpmyadmin/%{name}-%{version}-%{_pl}.tar.bz2
