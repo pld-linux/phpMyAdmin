@@ -1,12 +1,10 @@
-# TODO
-# - convert to webapps
 Summary:	phpMyAdmin - web-based MySQL administration
 Summary(pl):	phpMyAdmin - administracja bazami MySQL przez WWW
 Name:		phpMyAdmin
 Version:	2.7.0
 %define		_pl	pl1
-# release 2 (1 is for Ra)
-%define		_rel 2
+# release 1 is for Ra
+%define		_rel 2.5
 Release:	%{_pl}.%{_rel}
 License:	GPL v2
 Group:		Applications/Databases/Interfaces
@@ -16,17 +14,19 @@ Source0:	http://dl.sourceforge.net/phpmyadmin/%{name}-%{version}-%{_pl}.tar.bz2
 Source1:	%{name}.conf
 Patch0:		%{name}-config.patch
 URL:		http://www.phpmyadmin.net/
-Requires(postun):	perl-base
+Requires(triggerpostun):	sed >= 4.0
 Requires:	php
 Requires:	php-mysql
 Requires:	php-pcre
-Requires:	webserver
+Requires:	webapps
 #Suggests:	php-mbstring
 BuildArch:	noarch
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
-%define		_myadmindir	%{_datadir}/%{name}
-%define		_sysconfdir	/etc/%{name}
+%define		_appdir	%{_datadir}/%{name}
+%define		_webapps	/etc/webapps
+%define		_webapp		%{name}
+%define		_sysconfdir	%{_webapps}/%{_webapp}
 
 %description
 phpMyAdmin can administer a whole MySQL-server (needs a super-user)
@@ -63,94 +63,97 @@ podrêcznika MySQL). Aktualnie phpMyAdmin potrafi:
 - tworzyæ i czytaæ zrzuty tabel
 
 %prep
-#%setup -q
 %setup -q -n %{name}-%{version}-%{_pl}
 %patch -p1
 
 %install
 rm -rf $RPM_BUILD_ROOT
-install -d $RPM_BUILD_ROOT%{_myadmindir}/{css,lang,libraries/{auth,export,dbg,dbi,transformations}} \
-	$RPM_BUILD_ROOT{%{_sysconfdir},/etc/httpd}
+install -d $RPM_BUILD_ROOT{%{_sysconfdir},%{_appdir}/{css,lang,libraries/{auth,export,dbg,dbi,transformations}}}
 
-install *.php *.html *.css $RPM_BUILD_ROOT%{_myadmindir}
-install lang/*.php $RPM_BUILD_ROOT%{_myadmindir}/lang
-cp -rf themes $RPM_BUILD_ROOT%{_myadmindir}
-install css/* $RPM_BUILD_ROOT%{_myadmindir}/css
-install libraries/*.{js,php} $RPM_BUILD_ROOT%{_myadmindir}/libraries
-install libraries/auth/*.php $RPM_BUILD_ROOT%{_myadmindir}/libraries/auth
-install libraries/export/*.php $RPM_BUILD_ROOT%{_myadmindir}/libraries/export
-install libraries/dbg/*.php $RPM_BUILD_ROOT%{_myadmindir}/libraries/dbg
-install libraries/dbi/*.php $RPM_BUILD_ROOT%{_myadmindir}/libraries/dbi
-install libraries/transformations/*.php $RPM_BUILD_ROOT%{_myadmindir}/libraries/transformations
-
-cp -rf scripts $RPM_BUILD_ROOT%{_myadmindir}
+install *.php *.html *.css $RPM_BUILD_ROOT%{_appdir}
+install lang/*.php $RPM_BUILD_ROOT%{_appdir}/lang
+cp -rf themes $RPM_BUILD_ROOT%{_appdir}
+install css/* $RPM_BUILD_ROOT%{_appdir}/css
+install libraries/*.{js,php} $RPM_BUILD_ROOT%{_appdir}/libraries
+install libraries/auth/*.php $RPM_BUILD_ROOT%{_appdir}/libraries/auth
+install libraries/export/*.php $RPM_BUILD_ROOT%{_appdir}/libraries/export
+install libraries/dbg/*.php $RPM_BUILD_ROOT%{_appdir}/libraries/dbg
+install libraries/dbi/*.php $RPM_BUILD_ROOT%{_appdir}/libraries/dbi
+install libraries/transformations/*.php $RPM_BUILD_ROOT%{_appdir}/libraries/transformations
 
 install config.default.php $RPM_BUILD_ROOT%{_sysconfdir}/config.inc.php
-ln -sf %{_sysconfdir}/config.inc.php $RPM_BUILD_ROOT%{_myadmindir}/config.inc.php
+ln -sf %{_sysconfdir}/config.inc.php $RPM_BUILD_ROOT%{_appdir}/config.inc.php
 
-install %{SOURCE1} $RPM_BUILD_ROOT/etc/httpd/%{name}.conf
+install %{SOURCE1} $RPM_BUILD_ROOT%{_sysconfdir}/httpd.conf
+install %{SOURCE1} $RPM_BUILD_ROOT%{_sysconfdir}/apache.conf
 
 %clean
 rm -rf $RPM_BUILD_ROOT
 
-%post
-if [ -f /etc/httpd/httpd.conf ] && ! grep -q "^Include.*%{name}.conf" /etc/httpd/httpd.conf; then
-	echo "Include /etc/httpd/%{name}.conf" >> /etc/httpd/httpd.conf
-	if [ -f /var/lock/subsys/httpd ]; then
-		/usr/sbin/apachectl restart 1>&2
-	fi
-elif [ -d /etc/httpd/httpd.conf ]; then
-	ln -sf /etc/httpd/%{name}.conf /etc/httpd/httpd.conf/99_%{name}.conf
-	if [ -f /var/lock/subsys/httpd ]; then
-		/usr/sbin/apachectl restart 1>&2
-	fi
-fi
+%triggerin -- apache1
+%webapp_register apache %{_webapp}
 
-%preun
-if [ "$1" = "0" ]; then
-	umask 027
-	if [ -d /etc/httpd/httpd.conf ]; then
-		rm -f /etc/httpd/httpd.conf/99_%{name}.conf
-	else
-		grep -v "^Include.*%{name}.conf" /etc/httpd/httpd.conf > \
-			/etc/httpd/httpd.conf.tmp
-		mv -f /etc/httpd/httpd.conf.tmp /etc/httpd/httpd.conf
-	fi
-	if [ -f /var/lock/subsys/httpd ]; then
-		/usr/sbin/apachectl restart 1>&2
-	fi
-fi
+%triggerun -- apache1
+%webapp_unregister apache %{_webapp}
+
+%triggerin -- apache >= 2.0.0
+%webapp_register httpd %{_webapp}
+
+%triggerun -- apache >= 2.0.0
+%webapp_unregister httpd %{_webapp}
 
 %triggerpostun -- phpMyAdmin <= 2.5.3-2
-if [ -f /home/services/httpd/html/myadmin/config.inc.php.rpmsave ]; then
-	mv -f /home/services/httpd/html/myadmin/config.inc.php.rpmsave /etc/phpMyAdmin/config.inc.php
-else
-	if [ -f /home/httpd/html/myadmin/config.inc.php.rpmsave ]; then
-		mv -f /home/httpd/html/myadmin/config.inc.php.rpmsave /etc/phpMyAdmin/config.inc.php
-	fi
-fi
 for i in `grep -lr "/home/\(services/\)*httpd/html/myadmin" /etc/httpd/*`; do
 	cp $i $i.backup
-	%{__perl} -pi -e "s#/home/httpd/html/myadmin#%{_myadmindir}#g" $i
-	%{__perl} -pi -e "s#/home/services/httpd/html/myadmin#%{_myadmindir}#g" $i
+	sed -i -e "s#/home/httpd/html/myadmin#%{_appdir}#g" $i
+	sed -i -e "s#/home/services/httpd/html/myadmin#%{_appdir}#g" $i
 	echo "File changed by trigger: $i (backup: $i.backup)"
 done
+
+%triggerpostun -- %{name} < 2.7.0-pl1.2.5
+# rescue app config from various old locations
+if [ -f /home/services/httpd/html/myadmin/config.inc.php.rpmsave ]; then
+	mv -f %{_sysconfdir}/config.inc.php{,.rpmnew}
+	mv -f /home/services/httpd/html/myadmin/config.inc.php.rpmsav %{_sysconfdir}/config.inc.php
+fi
+if [ -f /home/httpd/html/myadmin/config.inc.php.rpmsave ]; then
+	mv -f %{_sysconfdir}/config.inc.php{,.rpmnew}
+	mv -f /home/httpd/html/myadmin/config.inc.php.rpmsave %{_sysconfdir}/config.inc.php
+fi
+if [ -f /etc/%{name}/config.inc.php.rpmsave ]; then
+	mv -f %{_sysconfdir}/config.inc.php{,.rpmnew}
+	mv -f /etc/%{name}/config.inc.php.rpmsave %{_sysconfdir}/config.inc.php
+fi
+
+# nuke very-old config location (this mostly for Ra)
+if [ -f /etc/httpd/httpd.conf ]; then
+	sed -i -e "/^Include.*%{name}.conf/d" /etc/httpd/httpd.conf
+fi
+
+# migrate from httpd (apache2) config dir
+if [ -f /etc/httpd/%{name}.conf.rpmsave ]; then
+	cp -f %{_sysconfdir}/httpd.conf{,.rpmnew}
+	mv -f /etc/httpd/%{name}.conf.rpmsave %{_sysconfdir}/httpd.conf
+fi
+
+rm -f /etc/httpd/httpd.conf/99_%{name}.conf
+/usr/sbin/webapp register httpd %{_webapp}
 if [ -f /var/lock/subsys/httpd ]; then
-	/usr/sbin/apachectl restart 1>&2
+	/etc/rc.d/init.d/httpd reload 1>&2
 fi
 
 %files
 %defattr(644,root,root,755)
 %doc Documentation.* CREDITS ChangeLog INSTALL README TODO translators.html scripts
-%dir %{_sysconfdir}
-%attr(640,root,http) %config(noreplace) %verify(not md5 mtime size) %{_sysconfdir}/*
-%config(noreplace) %verify(not md5 mtime size) /etc/httpd/%{name}.conf
-%dir %{_myadmindir}
-%{_myadmindir}/css
-%{_myadmindir}/themes
-%{_myadmindir}/scripts
-%{_myadmindir}/lang
-%{_myadmindir}/libraries
-%{_myadmindir}/*.css
-%{_myadmindir}/*.html
-%{_myadmindir}/*.php
+%dir %attr(750,root,http) %{_sysconfdir}
+%attr(640,root,root) %config(noreplace) %verify(not md5 mtime size) %{_sysconfdir}/apache.conf
+%attr(640,root,root) %config(noreplace) %verify(not md5 mtime size) %{_sysconfdir}/httpd.conf
+%attr(640,root,http) %config(noreplace) %verify(not md5 mtime size) %{_sysconfdir}/*.php
+%dir %{_appdir}
+%{_appdir}/css
+%{_appdir}/themes
+%{_appdir}/lang
+%{_appdir}/libraries
+%{_appdir}/*.css
+%{_appdir}/*.html
+%{_appdir}/*.php
