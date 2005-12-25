@@ -1,0 +1,7 @@
+- updated to 2.6.0-rc please note two things (please comment):
+  1.) blowfish phrase is now required for cookie auth, pelase set it independently
+  in /etc/phpMyAdmin/config.inc.php (not sure if the package should contan a default phrase
+  the good thing about that is: works out of the box, bad: insecure
+  2.) PMAbsoluteUri should be set as well (at least here the autodetection mechanism failed),
+  it is default in PLD for http://<yourwebdomain>/myadmin
+  again not sure if this should be added in the config file by packager or not
