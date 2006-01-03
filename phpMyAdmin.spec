@@ -68,7 +68,7 @@ podrêcznika MySQL). Aktualnie phpMyAdmin potrafi:
 
 %install
 rm -rf $RPM_BUILD_ROOT
-install -d $RPM_BUILD_ROOT{%{_sysconfdir},%{_appdir}/{css,lang,libraries/{auth,export,dbg,dbi,transformations}}}
+install -d $RPM_BUILD_ROOT{%{_sysconfdir},%{_appdir}/{css,lang,libraries/{auth,dbg,dbi,engines,export,import,transformations}}}
 
 install *.php *.html *.css $RPM_BUILD_ROOT%{_appdir}
 install lang/*.php $RPM_BUILD_ROOT%{_appdir}/lang
@@ -76,9 +76,11 @@ cp -rf themes $RPM_BUILD_ROOT%{_appdir}
 install css/* $RPM_BUILD_ROOT%{_appdir}/css
 install libraries/*.{js,php} $RPM_BUILD_ROOT%{_appdir}/libraries
 install libraries/auth/*.php $RPM_BUILD_ROOT%{_appdir}/libraries/auth
-install libraries/export/*.php $RPM_BUILD_ROOT%{_appdir}/libraries/export
 install libraries/dbg/*.php $RPM_BUILD_ROOT%{_appdir}/libraries/dbg
 install libraries/dbi/*.php $RPM_BUILD_ROOT%{_appdir}/libraries/dbi
+install libraries/engines/*.php $RPM_BUILD_ROOT%{_appdir}/libraries/engines
+install libraries/export/*.php $RPM_BUILD_ROOT%{_appdir}/libraries/export
+install libraries/import/*.php $RPM_BUILD_ROOT%{_appdir}/libraries/import
 install libraries/transformations/*.php $RPM_BUILD_ROOT%{_appdir}/libraries/transformations
 
 install config.default.php $RPM_BUILD_ROOT%{_sysconfdir}/config.inc.php
