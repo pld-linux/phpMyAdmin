@@ -4,7 +4,7 @@ Name:		phpMyAdmin
 Version:	2.7.0
 %define		_pl	pl2
 # release 1 is for Ra
-%define		_rel 2
+%define		_rel 3
 Release:	%{_pl}.%{_rel}
 License:	GPL v2
 Group:		Applications/Databases/Interfaces
@@ -14,6 +14,7 @@ Source0:	http://dl.sourceforge.net/phpmyadmin/%{name}-%{version}-%{_pl}.tar.bz2
 Source1:	%{name}.conf
 Patch0:		%{name}-config.patch
 URL:		http://www.phpmyadmin.net/
+BuildRequires:	rpmbuild(macros) >= 1.268
 Requires(triggerpostun):	sed >= 4.0
 Requires:	php
 Requires:	php-mysql
@@ -140,9 +141,7 @@ fi
 
 rm -f /etc/httpd/httpd.conf/99_%{name}.conf
 /usr/sbin/webapp register httpd %{_webapp}
-if [ -f /var/lock/subsys/httpd ]; then
-	/etc/rc.d/init.d/httpd reload 1>&2
-fi
+%service httpd reload
 
 %files
 %defattr(644,root,root,755)
