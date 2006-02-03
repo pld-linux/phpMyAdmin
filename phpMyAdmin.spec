@@ -4,7 +4,7 @@ Name:		phpMyAdmin
 Version:	2.7.0
 %define		_pl	pl2
 # release 1 is for Ra
-%define		_rel 3
+%define		_rel 4
 Release:	%{_pl}.%{_rel}
 License:	GPL v2
 Group:		Applications/Databases/Interfaces
