@@ -1,6 +1,6 @@
-diff -ur phpMyAdmin.orig/config.default.php phpMyAdmin/config.default.php
---- phpMyAdmin.orig/config.default.php	2005-11-23 11:34:32.000000000 +0100
-+++ phpMyAdmin/config.default.php	2005-12-19 21:02:34.565280520 +0100
+diff -ur phpMyAdmin.orig/libraries/config.default.php phpMyAdmin/libraries/config.default.php
+--- phpMyAdmin.orig/libraries/config.default.php	2005-11-23 11:34:32.000000000 +0100
++++ phpMyAdmin/libraries/config.default.php	2005-12-19 21:02:34.565280520 +0100
 @@ -1,8 +1,6 @@
  <?php
  
