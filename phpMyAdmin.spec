@@ -66,12 +66,13 @@ podrêcznika MySQL). Aktualnie phpMyAdmin potrafi:
 
 %install
 rm -rf $RPM_BUILD_ROOT
-install -d $RPM_BUILD_ROOT{%{_sysconfdir},%{_appdir}/{css,lang,libraries/{auth,dbg,dbi,engines,export,import,transformations}}}
+install -d $RPM_BUILD_ROOT{%{_sysconfdir},%{_appdir}/{css,js,lang,libraries/{auth,dbg,dbi,engines,export,import,transformations}}}
 
 install *.php *.html *.css $RPM_BUILD_ROOT%{_appdir}
 install lang/*.php $RPM_BUILD_ROOT%{_appdir}/lang
 cp -rf themes $RPM_BUILD_ROOT%{_appdir}
 install css/* $RPM_BUILD_ROOT%{_appdir}/css
+install js/* $RPM_BUILD_ROOT%{_appdir}/js
 install libraries/*.php $RPM_BUILD_ROOT%{_appdir}/libraries
 install libraries/auth/*.php $RPM_BUILD_ROOT%{_appdir}/libraries/auth
 install libraries/dbg/*.php $RPM_BUILD_ROOT%{_appdir}/libraries/dbg
@@ -149,9 +150,10 @@ rm -f /etc/httpd/httpd.conf/99_%{name}.conf
 %attr(640,root,http) %config(noreplace) %verify(not md5 mtime size) %{_sysconfdir}/*.php
 %dir %{_appdir}
 %{_appdir}/css
-%{_appdir}/themes
+%{_appdir}/js
 %{_appdir}/lang
 %{_appdir}/libraries
+%{_appdir}/themes
 %{_appdir}/*.css
 %{_appdir}/*.html
 %{_appdir}/*.php
