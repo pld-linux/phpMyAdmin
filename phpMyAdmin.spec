@@ -2,15 +2,12 @@ Summary:	phpMyAdmin - web-based MySQL administration
 Summary(pl):	phpMyAdmin - administracja bazami MySQL przez WWW
 Name:		phpMyAdmin
 Version:	2.8.0.1
-%define		_pl	pl2
 # release 1 is for Ra
-%define		_rel 4
-Release:	%{_pl}.%{_rel}
+Release:	2
 License:	GPL v2
 Group:		Applications/Databases/Interfaces
 Source0:	http://dl.sourceforge.net/phpmyadmin/%{name}-%{version}.tar.bz2
 # Source0-md5:	1ef0b82402b1d43c2be32521baef8b7e
-#Source0:	http://dl.sourceforge.net/phpmyadmin/%{name}-%{version}.tar.bz2
 Source1:	%{name}.conf
 Patch0:		%{name}-config.patch
 URL:		http://www.phpmyadmin.net/
@@ -64,7 +61,7 @@ podrêcznika MySQL). Aktualnie phpMyAdmin potrafi:
 - tworzyæ i czytaæ zrzuty tabel
 
 %prep
-%setup -q -n %{name}-%{version}
+%setup -q
 %patch -p1
 
 %install
