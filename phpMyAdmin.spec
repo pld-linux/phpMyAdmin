@@ -20,7 +20,7 @@ Requires:	webapps
 BuildArch:	noarch
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
-%define		_appdir	%{_datadir}/%{name}
+%define		_appdir		%{_datadir}/%{name}
 %define		_webapps	/etc/webapps
 %define		_webapp		%{name}
 %define		_sysconfdir	%{_webapps}/%{_webapp}
@@ -61,7 +61,7 @@ podrêcznika MySQL). Aktualnie phpMyAdmin potrafi:
 
 %prep
 %setup -q
-%patch -p1
+%patch0 -p1
 
 %install
 rm -rf $RPM_BUILD_ROOT
