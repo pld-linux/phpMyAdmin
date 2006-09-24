@@ -1,6 +1,5 @@
-diff -ur phpMyAdmin.orig/libraries/config.default.php phpMyAdmin/libraries/config.default.php
---- phpMyAdmin.orig/libraries/config.default.php	2005-11-23 11:34:32.000000000 +0100
-+++ phpMyAdmin/libraries/config.default.php	2005-12-19 21:02:34.565280520 +0100
+--- libraries/config.default.php.orig	2006-09-12 19:14:24.000000000 +0200
++++ libraries/config.default.php	2006-09-25 00:29:36.685491664 +0200
 @@ -1,8 +1,6 @@
  <?php
  
@@ -21,4 +20,4 @@ diff -ur phpMyAdmin.orig/libraries/config.default.php phpMyAdmin/libraries/confi
 +$cfg['Servers'][$i]['user']          = 'mysql';      // MySQL user
  $cfg['Servers'][$i]['password']      = '';          // MySQL password (only needed
                                                      // with 'config' auth_type)
- $cfg['Servers'][$i]['only_db']       = '';          // If set to a db-name, only
+ $cfg['Servers'][$i]['nopassword']    = FALSE;       // Whether to try to connect without password
