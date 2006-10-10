@@ -12,11 +12,11 @@ Patch0:		%{name}-config.patch
 URL:		http://www.phpmyadmin.net/
 BuildRequires:	rpmbuild(macros) >= 1.268
 Requires(triggerpostun):	sed >= 4.0
-Requires:	apache(mod_authz_host)
 Requires:	php
 Requires:	php-mysql
 Requires:	php-pcre
 Requires:	webapps
+Requires:	webserver(access)
 #Suggests:	php-mbstring
 BuildArch:	noarch
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
