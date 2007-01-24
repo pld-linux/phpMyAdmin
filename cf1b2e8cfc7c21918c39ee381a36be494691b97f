@@ -1,0 +1,2 @@
+- security up to 2.9.0.1 - XSRF (Cross Site Request Forgery) vulnerabilities
+[fixes CVE-2006-5116]
