@@ -1,0 +1,4 @@
+- updated to 2.3.0,
+- use new %doc,
+- include all files in %{_myadmindir} (sugested by Krzysztof Pobieżyński
+  <ppv@wiedzmin.org>).
