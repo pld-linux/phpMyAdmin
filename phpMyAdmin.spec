@@ -1,5 +1,5 @@
 Summary:	phpMyAdmin - web-based MySQL administration
-Summary(pl.UTF-8):   phpMyAdmin - administracja bazami MySQL przez WWW
+Summary(pl.UTF-8):	phpMyAdmin - administracja bazami MySQL przez WWW
 Name:		phpMyAdmin
 Version:	2.9.2
 Release:	1
