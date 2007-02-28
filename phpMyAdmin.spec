@@ -1,12 +1,12 @@
 Summary:	phpMyAdmin - web-based MySQL administration
 Summary(pl):	phpMyAdmin - administracja bazami MySQL przez WWW
 Name:		phpMyAdmin
-Version:	2.9.2
+Version:	2.10.0
 Release:	1
 License:	GPL v2
 Group:		Applications/Databases/Interfaces
 Source0:	http://dl.sourceforge.net/phpmyadmin/%{name}-%{version}-all-languages.tar.bz2
-# Source0-md5:	8d67cab6f93da370929622d0ef96839a
+# Source0-md5:	76a3301922b8125dbf2ad42122231efd
 Source1:	%{name}.conf
 Patch0:		%{name}-config.patch
 URL:		http://www.phpmyadmin.net/
@@ -66,7 +66,7 @@ podrêcznika MySQL). Aktualnie phpMyAdmin potrafi:
 
 %install
 rm -rf $RPM_BUILD_ROOT
-install -d $RPM_BUILD_ROOT{%{_sysconfdir},%{_appdir}/{css,js,lang,libraries/{auth,dbg,dbi,engines,export,fpdf/font,import,transformations}}}
+install -d $RPM_BUILD_ROOT{%{_sysconfdir},%{_appdir}/{css,js,lang,libraries/{auth,dbg,dbi,engines,export,tcpdf/font,import,transformations}}}
 
 install *.php *.html *.css $RPM_BUILD_ROOT%{_appdir}
 install lang/*.php $RPM_BUILD_ROOT%{_appdir}/lang
@@ -79,8 +79,8 @@ install libraries/dbg/*.php $RPM_BUILD_ROOT%{_appdir}/libraries/dbg
 install libraries/dbi/*.php $RPM_BUILD_ROOT%{_appdir}/libraries/dbi
 install libraries/engines/*.php $RPM_BUILD_ROOT%{_appdir}/libraries/engines
 install libraries/export/*.php $RPM_BUILD_ROOT%{_appdir}/libraries/export
-install libraries/fpdf/*.php $RPM_BUILD_ROOT%{_appdir}/libraries/fpdf
-install libraries/fpdf/font/*.{php,z} $RPM_BUILD_ROOT%{_appdir}/libraries/fpdf/font
+install libraries/tcpdf/*.php $RPM_BUILD_ROOT%{_appdir}/libraries/tcpdf
+install libraries/tcpdf/font/*.{php,z} $RPM_BUILD_ROOT%{_appdir}/libraries/tcpdf/font
 install libraries/import/*.php $RPM_BUILD_ROOT%{_appdir}/libraries/import
 install libraries/transformations/*.php $RPM_BUILD_ROOT%{_appdir}/libraries/transformations
 
