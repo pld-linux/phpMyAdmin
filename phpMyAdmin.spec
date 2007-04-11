@@ -19,7 +19,6 @@ Requires:	php(pcre)
 Requires:	webapps
 Requires:	webserver(access)
 Requires:	webserver(php)
-#Suggests:	php-mbstring
 BuildArch:	noarch
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
