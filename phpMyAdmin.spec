@@ -1,12 +1,12 @@
 Summary:	phpMyAdmin - web-based MySQL administration
-Summary(pl.UTF-8):	phpMyAdmin - administracja bazami MySQL przez WWW
+Summary(pl):	phpMyAdmin - administracja bazami MySQL przez WWW
 Name:		phpMyAdmin
-Version:	2.10.0.2
-Release:	2
+Version:	2.10.1
+Release:	1
 License:	GPL v2
 Group:		Applications/Databases/Interfaces
 Source0:	http://dl.sourceforge.net/phpmyadmin/%{name}-%{version}-all-languages.tar.bz2
-# Source0-md5:	2aa1abcdacc93a6ccdea149d8c74aa9c
+# Source0-md5:	f3f9ae0b0de6f5c8b8fda7104e63d565
 Source1:	%{name}.conf
 Patch0:		%{name}-config.patch
 URL:		http://www.phpmyadmin.net/
@@ -44,22 +44,22 @@ manual. Currently phpMyAdmin can:
 - administer multiple servers and single databases
 - communicate in more than 20 different languages
 
-%description -l pl.UTF-8
-phpMyAdmin potrafi zarzÄ…dzaÄ‡ caÅ‚ymi bazami MySQL (potrzebne
-uprawnienia superuÅ¼ytkownika) jak i pojedynczymi bazami danych.
-Potrzebny jest uÅ¼ytkownik, ktÃ³ry ma prawa zapisu/odczytu tylko tych
-baz, ktÃ³rymi chcemy administrowaÄ‡ (wiÄ™cej informacji w odpowiedniej
-podrÄ™cznika MySQL). Aktualnie phpMyAdmin potrafi:
-- tworzyÄ‡ i usuwaÄ‡ bazy
-- wykonywaÄ‡ create, copy, drop oraz alter na tabelach
-- dodawaÄ‡, usuwaÄ‡ i modyfikowaÄ‡ pola
-- wykonywaÄ‡ dowolne zapytania SQL
-- zarzÄ…dzaÄ‡ kluczami na rekordach
-- wczytywaÄ‡ tekst z plikÃ³w do tabel
-- obsÅ‚ugiwaÄ‡ ponad 20 jÄ™zykÃ³w
-- zarzÄ…dzaÄ‡ wieloma serwerami i pojedynczymi bazami danych
-- eksportowaÄ‡ i importowaÄ‡ dane do wartoÅ›ci CSV
-- tworzyÄ‡ i czytaÄ‡ zrzuty tabel
+%description -l pl
+phpMyAdmin potrafi zarz±dzaæ ca³ymi bazami MySQL (potrzebne
+uprawnienia superu¿ytkownika) jak i pojedynczymi bazami danych.
+Potrzebny jest u¿ytkownik, który ma prawa zapisu/odczytu tylko tych
+baz, którymi chcemy administrowaæ (wiêcej informacji w odpowiedniej
+podrêcznika MySQL). Aktualnie phpMyAdmin potrafi:
+- tworzyæ i usuwaæ bazy
+- wykonywaæ create, copy, drop oraz alter na tabelach
+- dodawaæ, usuwaæ i modyfikowaæ pola
+- wykonywaæ dowolne zapytania SQL
+- zarz±dzaæ kluczami na rekordach
+- wczytywaæ tekst z plików do tabel
+- obs³ugiwaæ ponad 20 jêzyków
+- zarz±dzaæ wieloma serwerami i pojedynczymi bazami danych
+- eksportowaæ i importowaæ dane do warto¶ci CSV
+- tworzyæ i czytaæ zrzuty tabel
 
 %prep
 %setup -q -n %{name}-%{version}-all-languages
