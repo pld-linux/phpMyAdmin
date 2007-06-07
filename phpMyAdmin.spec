@@ -2,7 +2,7 @@ Summary:	phpMyAdmin - web-based MySQL administration
 Summary(pl.UTF-8):	phpMyAdmin - administracja bazami MySQL przez WWW
 Name:		phpMyAdmin
 Version:	2.10.1
-Release:	1
+Release:	2
 License:	GPL v2
 Group:		Applications/Databases/Interfaces
 Source0:	http://dl.sourceforge.net/phpmyadmin/%{name}-%{version}-all-languages.tar.bz2
@@ -42,7 +42,10 @@ manual. Currently phpMyAdmin can:
 - create (*) and read dumps of tables
 - export (*) and import data to CSV values
 - administer multiple servers and single databases
-- communicate in more than 20 different languages
+- check referencial integrity
+- create complex queries automatically connecting required tables
+- create PDF graphics of your database layout
+- communicate in more than 50 different languages
 
 %description -l pl.UTF-8
 phpMyAdmin potrafi zarządzać całymi bazami MySQL (potrzebne
@@ -71,6 +74,7 @@ install -d $RPM_BUILD_ROOT{%{_sysconfdir},%{_appdir}/{css,js,lang,libraries/{aut
 
 install *.php *.html *.css $RPM_BUILD_ROOT%{_appdir}
 install lang/*.php $RPM_BUILD_ROOT%{_appdir}/lang
+cp -rf pmd $RPM_BUILD_ROOT%{_appdir}
 cp -rf themes $RPM_BUILD_ROOT%{_appdir}
 install css/* $RPM_BUILD_ROOT%{_appdir}/css
 install js/* $RPM_BUILD_ROOT%{_appdir}/js
@@ -80,9 +84,9 @@ install libraries/dbg/*.php $RPM_BUILD_ROOT%{_appdir}/libraries/dbg
 install libraries/dbi/*.php $RPM_BUILD_ROOT%{_appdir}/libraries/dbi
 install libraries/engines/*.php $RPM_BUILD_ROOT%{_appdir}/libraries/engines
 install libraries/export/*.php $RPM_BUILD_ROOT%{_appdir}/libraries/export
+install libraries/import/*.php $RPM_BUILD_ROOT%{_appdir}/libraries/import
 install libraries/tcpdf/*.php $RPM_BUILD_ROOT%{_appdir}/libraries/tcpdf
 install libraries/tcpdf/font/*.{php,z} $RPM_BUILD_ROOT%{_appdir}/libraries/tcpdf/font
-install libraries/import/*.php $RPM_BUILD_ROOT%{_appdir}/libraries/import
 install libraries/transformations/*.php $RPM_BUILD_ROOT%{_appdir}/libraries/transformations
 
 install libraries/config.default.php $RPM_BUILD_ROOT%{_sysconfdir}/config.inc.php
@@ -90,6 +94,10 @@ ln -sf %{_sysconfdir}/config.inc.php $RPM_BUILD_ROOT%{_appdir}/config.inc.php
 
 install %{SOURCE1} $RPM_BUILD_ROOT%{_sysconfdir}/httpd.conf
 install %{SOURCE1} $RPM_BUILD_ROOT%{_sysconfdir}/apache.conf
+
+cp -f libraries/tcpdf/README{,-tcpdf}
+cp -f libraries/import/README{,-import}
+cp -f libraries/transformations/README{,-transformations}
 
 %clean
 rm -rf $RPM_BUILD_ROOT
@@ -146,7 +154,7 @@ rm -f /etc/httpd/httpd.conf/99_%{name}.conf
 
 %files
 %defattr(644,root,root,755)
-%doc Documentation.* CREDITS ChangeLog INSTALL README TODO translators.html scripts
+%doc Documentation.* CREDITS ChangeLog INSTALL README TODO translators.html scripts libraries/tcpdf/README-tcpdf libraries/import/README-import libraries/transformations/README-transformations libraries/transformations/TEMPLATE* libraries/transformations/*.sh lang/*.sh
 %dir %attr(750,root,http) %{_sysconfdir}
 %attr(640,root,root) %config(noreplace) %verify(not md5 mtime size) %{_sysconfdir}/apache.conf
 %attr(640,root,root) %config(noreplace) %verify(not md5 mtime size) %{_sysconfdir}/httpd.conf
@@ -156,6 +164,7 @@ rm -f /etc/httpd/httpd.conf/99_%{name}.conf
 %{_appdir}/js
 %{_appdir}/lang
 %{_appdir}/libraries
+%{_appdir}/pmd
 %{_appdir}/themes
 %{_appdir}/*.css
 %{_appdir}/*.html
