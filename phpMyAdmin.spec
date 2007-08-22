@@ -1,18 +1,19 @@
 Summary:	phpMyAdmin - web-based MySQL administration
 Summary(pl.UTF-8):	phpMyAdmin - administracja bazami MySQL przez WWW
 Name:		phpMyAdmin
-Version:	2.10.3
+Version:	2.11.0
 Release:	1
 License:	GPL v2
 Group:		Applications/Databases/Interfaces
 Source0:	http://dl.sourceforge.net/phpmyadmin/%{name}-%{version}-all-languages.tar.bz2
-# Source0-md5:	7866cc1033ba79b5f71354c66d109033
+# Source0-md5:	64cf56f3b44725e5edcdea871166641f
 Source1:	%{name}.conf
 Patch0:		%{name}-config.patch
 URL:		http://www.phpmyadmin.net/
 BuildRequires:	rpmbuild(macros) >= 1.268
 Requires(triggerpostun):	sed >= 4.0
 Requires:	php(ctype)
+Requires:	php(mcrypt)
 Requires:	php(mbstring)
 Requires:	php(mysql)
 Requires:	php(pcre)
@@ -66,17 +67,16 @@ podręcznika MySQL). Aktualnie phpMyAdmin potrafi:
 
 %prep
 %setup -q -n %{name}-%{version}-all-languages
-%patch0 -p0
+%patch0 -p1
 
 %install
 rm -rf $RPM_BUILD_ROOT
-install -d $RPM_BUILD_ROOT{%{_sysconfdir},%{_appdir}/{css,js,lang,libraries/{auth,dbg,dbi,engines,export,tcpdf/font,import,transformations}}}
+install -d $RPM_BUILD_ROOT{%{_sysconfdir},%{_appdir}/{js,lang,libraries/{auth,dbg,dbi,engines,export,tcpdf/font,import,transformations}}}
 
 install *.php *.html *.css $RPM_BUILD_ROOT%{_appdir}
 install lang/*.php $RPM_BUILD_ROOT%{_appdir}/lang
 cp -rf pmd $RPM_BUILD_ROOT%{_appdir}
 cp -rf themes $RPM_BUILD_ROOT%{_appdir}
-install css/* $RPM_BUILD_ROOT%{_appdir}/css
 install js/* $RPM_BUILD_ROOT%{_appdir}/js
 install libraries/*.php $RPM_BUILD_ROOT%{_appdir}/libraries
 install libraries/auth/*.php $RPM_BUILD_ROOT%{_appdir}/libraries/auth
@@ -160,7 +160,6 @@ rm -f /etc/httpd/httpd.conf/99_%{name}.conf
 %attr(640,root,root) %config(noreplace) %verify(not md5 mtime size) %{_sysconfdir}/httpd.conf
 %attr(640,root,http) %config(noreplace) %verify(not md5 mtime size) %{_sysconfdir}/*.php
 %dir %{_appdir}
-%{_appdir}/css
 %{_appdir}/js
 %{_appdir}/lang
 %{_appdir}/libraries
