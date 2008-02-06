@@ -2,7 +2,7 @@ Summary:	phpMyAdmin - web-based MySQL administration
 Summary(pl.UTF-8):	phpMyAdmin - administracja bazami MySQL przez WWW
 Name:		phpMyAdmin
 Version:	2.11.4
-Release:	1
+Release:	2
 License:	GPL v2
 Group:		Applications/Databases/Interfaces
 Source0:	http://dl.sourceforge.net/phpmyadmin/%{name}-%{version}-all-languages.tar.bz2
@@ -113,44 +113,6 @@ rm -rf $RPM_BUILD_ROOT
 
 %triggerun -- apache < 2.2.0, apache-base
 %webapp_unregister httpd %{_webapp}
-
-%triggerpostun -- phpMyAdmin <= 2.5.3-2
-for i in `grep -lr "/home/\(services/\)*httpd/html/myadmin" /etc/httpd/*`; do
-	cp $i $i.backup
-	sed -i -e "s#/home/httpd/html/myadmin#%{_appdir}#g" $i
-	sed -i -e "s#/home/services/httpd/html/myadmin#%{_appdir}#g" $i
-	echo "File changed by trigger: $i (backup: $i.backup)"
-done
-
-%triggerpostun -- %{name} < 2.7.0-pl1.2.5
-# rescue app config from various old locations
-if [ -f /home/services/httpd/html/myadmin/config.inc.php.rpmsave ]; then
-	mv -f %{_sysconfdir}/config.inc.php{,.rpmnew}
-	mv -f /home/services/httpd/html/myadmin/config.inc.php.rpmsav %{_sysconfdir}/config.inc.php
-fi
-if [ -f /home/httpd/html/myadmin/config.inc.php.rpmsave ]; then
-	mv -f %{_sysconfdir}/config.inc.php{,.rpmnew}
-	mv -f /home/httpd/html/myadmin/config.inc.php.rpmsave %{_sysconfdir}/config.inc.php
-fi
-if [ -f /etc/%{name}/config.inc.php.rpmsave ]; then
-	mv -f %{_sysconfdir}/config.inc.php{,.rpmnew}
-	mv -f /etc/%{name}/config.inc.php.rpmsave %{_sysconfdir}/config.inc.php
-fi
-
-# nuke very-old config location (this mostly for Ra)
-if [ -f /etc/httpd/httpd.conf ]; then
-	sed -i -e "/^Include.*%{name}.conf/d" /etc/httpd/httpd.conf
-fi
-
-# migrate from httpd (apache2) config dir
-if [ -f /etc/httpd/%{name}.conf.rpmsave ]; then
-	cp -f %{_sysconfdir}/httpd.conf{,.rpmnew}
-	mv -f /etc/httpd/%{name}.conf.rpmsave %{_sysconfdir}/httpd.conf
-fi
-
-rm -f /etc/httpd/httpd.conf/99_%{name}.conf
-/usr/sbin/webapp register httpd %{_webapp}
-%service httpd reload
 
 %files
 %defattr(644,root,root,755)
