@@ -20,6 +20,7 @@ Requires:	php(mysql)
 Requires:	php(pcre)
 Requires:	webapps
 Requires:	webserver(access)
+Requires:	webserver(alias)
 Requires:	webserver(php)
 BuildArch:	noarch
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
