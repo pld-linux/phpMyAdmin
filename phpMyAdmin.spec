@@ -1,3 +1,5 @@
+# TODO
+# - add codepress (http://codepress.org/index.php) patch
 Summary:	phpMyAdmin - web-based MySQL administration
 Summary(pl.UTF-8):	phpMyAdmin - administracja bazami MySQL przez WWW
 Name:		phpMyAdmin
