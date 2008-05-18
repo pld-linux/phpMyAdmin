@@ -4,7 +4,7 @@ Summary:	phpMyAdmin - web-based MySQL administration
 Summary(pl.UTF-8):	phpMyAdmin - administracja bazami MySQL przez WWW
 Name:		phpMyAdmin
 Version:	2.11.6
-Release:	2
+Release:	3
 License:	GPL v2
 Group:		Applications/Databases/Interfaces
 Source0:	http://dl.sourceforge.net/phpmyadmin/%{name}-%{version}-all-languages.tar.bz2
@@ -16,14 +16,15 @@ URL:		http://www.phpmyadmin.net/
 BuildRequires:	rpmbuild(macros) >= 1.268
 Requires(triggerpostun):	sed >= 4.0
 Requires:	php(ctype)
-Requires:	php(mcrypt)
 Requires:	php(mbstring)
+Requires:	php(mcrypt)
 Requires:	php(mysql)
 Requires:	php(pcre)
 Requires:	webapps
 Requires:	webserver(access)
 Requires:	webserver(alias)
 Requires:	webserver(php)
+Suggests:	webserver(indexfile)
 BuildArch:	noarch
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
@@ -124,6 +125,16 @@ rm -rf $RPM_BUILD_ROOT
 
 %triggerun -- lighttpd
 %webapp_unregister lighttpd %{_webapp}
+
+%post
+if [ "$1" = 1 ]; then
+%banner -e %{name} <<EOF
+To access phpMyAdmin type in a web browser following url:
+http://localhost/myadmin/index.php
+If you have installed webserver(indexfile) you can use shorter version:
+http://localhost/myadmin
+EOF
+fi
 
 %files
 %defattr(644,root,root,755)
