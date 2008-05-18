@@ -126,16 +126,6 @@ rm -rf $RPM_BUILD_ROOT
 %triggerun -- lighttpd
 %webapp_unregister lighttpd %{_webapp}
 
-%post
-if [ "$1" = 1 ]; then
-%banner -e %{name} <<EOF
-To access phpMyAdmin type in a web browser following url:
-http://localhost/myadmin/index.php
-If you have installed webserver(indexfile) you can use shorter version:
-http://localhost/myadmin
-EOF
-fi
-
 %files
 %defattr(644,root,root,755)
 %doc Documentation.* CREDITS ChangeLog INSTALL README TODO translators.html scripts libraries/tcpdf/README-tcpdf libraries/import/README-import libraries/transformations/README-transformations libraries/transformations/TEMPLATE* libraries/transformations/*.sh lang/*.sh
