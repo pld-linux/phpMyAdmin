@@ -4,7 +4,7 @@ Summary:	phpMyAdmin - web-based MySQL administration
 Summary(pl.UTF-8):	phpMyAdmin - administracja bazami MySQL przez WWW
 Name:		phpMyAdmin
 Version:	2.11.8.1
-Release:	1
+Release:	2
 License:	GPL v2
 Group:		Applications/Databases/Interfaces
 Source0:	http://dl.sourceforge.net/phpmyadmin/%{name}-%{version}-all-languages.tar.bz2
@@ -12,6 +12,8 @@ Source0:	http://dl.sourceforge.net/phpmyadmin/%{name}-%{version}-all-languages.t
 Source1:	%{name}.conf
 Source2:	%{name}-lighttpd.conf
 Patch0:		%{name}-config.patch
+Patch1:		%{name}-ServerSelectDisplayName.patch
+Patch2:		%{name}-ServerSelectDisplayName-config.patch
 URL:		http://www.phpmyadmin.net/
 BuildRequires:	rpmbuild(macros) >= 1.268
 Requires(triggerpostun):	sed >= 4.0
@@ -73,6 +75,8 @@ podręcznika MySQL). Aktualnie phpMyAdmin potrafi:
 %prep
 %setup -q -n %{name}-%{version}-all-languages
 %patch0 -p1
+%patch1 -p0
+%patch2 -p0
 
 %install
 rm -rf $RPM_BUILD_ROOT

@@ -1,0 +1,19 @@
+*** libraries/select_server.lib.php.org	Tue Aug 19 00:41:59 2008
+--- libraries/select_server.lib.php	Tue Aug 19 00:42:35 2008
+***************
+*** 62,68 ****
+          if (!empty($server['verbose'])) {
+              $label = $server['verbose'];
+          } else {
+!             $label = $server['host'];
+              if (!empty($server['port'])) {
+                  $label .= ':' . $server['port'];
+              }
+--- 62,68 ----
+          if (!empty($server['verbose'])) {
+              $label = $server['verbose'];
+          } else {
+!             $label = isset($server['display']) ? $server['display'] : $server['host'];
+              if (!empty($server['port'])) {
+                  $label .= ':' . $server['port'];
+              }
