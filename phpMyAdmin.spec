@@ -12,10 +12,10 @@ Source0:	http://dl.sourceforge.net/phpmyadmin/%{name}-%{version}-all-languages.t
 Source1:	%{name}.conf
 Source2:	%{name}-lighttpd.conf
 Patch0:		%{name}-config.patch
-Patch1:		%{name}-ServerSelectDisplayName.patch
-Patch2:		%{name}-ServerSelectDisplayName-config.patch
 URL:		http://www.phpmyadmin.net/
 BuildRequires:	rpmbuild(macros) >= 1.268
+Patch1:		%{name}-ServerSelectDisplayName.patch
+Patch2:		%{name}-ServerSelectDisplayName-config.patch
 Requires(triggerpostun):	sed >= 4.0
 Requires:	php(ctype)
 Requires:	php(mbstring)
@@ -26,7 +26,7 @@ Requires:	webapps
 Requires:	webserver(access)
 Requires:	webserver(alias)
 Requires:	webserver(php)
-Suggests:	php(mysqli)
+Suggests:	php-mysqli
 Suggests:	webserver(indexfile)
 BuildArch:	noarch
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
