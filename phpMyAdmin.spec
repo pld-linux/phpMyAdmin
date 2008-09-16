@@ -3,12 +3,12 @@
 Summary:	phpMyAdmin - web-based MySQL administration
 Summary(pl.UTF-8):	phpMyAdmin - administracja bazami MySQL przez WWW
 Name:		phpMyAdmin
-Version:	2.11.9
+Version:	2.11.9.1
 Release:	1
 License:	GPL v2
 Group:		Applications/Databases/Interfaces
 Source0:	http://dl.sourceforge.net/phpmyadmin/%{name}-%{version}-all-languages.tar.bz2
-# Source0-md5:	692805538f33b1e1d24430476e3ae426
+# Source0-md5:	04bebba1ef0f260018cbeec2a1e9b9ff
 Source1:	%{name}.conf
 Source2:	%{name}-lighttpd.conf
 Patch0:		%{name}-config.patch
