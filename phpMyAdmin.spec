@@ -3,12 +3,12 @@
 Summary:	phpMyAdmin - web-based MySQL administration
 Summary(pl.UTF-8):	phpMyAdmin - administracja bazami MySQL przez WWW
 Name:		phpMyAdmin
-Version:	2.11.9.2
+Version:	3.0.0
 Release:	1
 License:	GPL v2
 Group:		Applications/Databases/Interfaces
 Source0:	http://dl.sourceforge.net/phpmyadmin/%{name}-%{version}-all-languages.tar.bz2
-# Source0-md5:	fa1f19b342cbd5d0e23dcc47bff40635
+# Source0-md5:	f14b23fa5065fdc1e1709c87bb2aad1d
 Source1:	%{name}.conf
 Source2:	%{name}-lighttpd.conf
 Patch0:		%{name}-config.patch
@@ -87,7 +87,7 @@ install *.php *.html *.css $RPM_BUILD_ROOT%{_appdir}
 install lang/*.php $RPM_BUILD_ROOT%{_appdir}/lang
 cp -rf pmd $RPM_BUILD_ROOT%{_appdir}
 cp -rf themes $RPM_BUILD_ROOT%{_appdir}
-install js/* $RPM_BUILD_ROOT%{_appdir}/js
+cp -rf js $RPM_BUILD_ROOT%{_appdir}
 install libraries/*.php $RPM_BUILD_ROOT%{_appdir}/libraries
 install libraries/auth/*.php $RPM_BUILD_ROOT%{_appdir}/libraries/auth
 install libraries/dbg/*.php $RPM_BUILD_ROOT%{_appdir}/libraries/dbg
@@ -106,7 +106,6 @@ install %{SOURCE1} $RPM_BUILD_ROOT%{_sysconfdir}/httpd.conf
 install %{SOURCE1} $RPM_BUILD_ROOT%{_sysconfdir}/apache.conf
 install %{SOURCE2} $RPM_BUILD_ROOT%{_sysconfdir}/lighttpd.conf
 
-cp -f libraries/tcpdf/README{,-tcpdf}
 cp -f libraries/import/README{,-import}
 cp -f libraries/transformations/README{,-transformations}
 
@@ -133,7 +132,7 @@ rm -rf $RPM_BUILD_ROOT
 
 %files
 %defattr(644,root,root,755)
-%doc Documentation.* CREDITS ChangeLog INSTALL README TODO translators.html scripts libraries/tcpdf/README-tcpdf libraries/import/README-import libraries/transformations/README-transformations libraries/transformations/TEMPLATE* libraries/transformations/*.sh lang/*.sh
+%doc Documentation.* CREDITS ChangeLog INSTALL README TODO translators.html scripts libraries/import/README-import libraries/transformations/README-transformations libraries/transformations/TEMPLATE* libraries/transformations/*.sh lang/*.sh
 %dir %attr(750,root,http) %{_sysconfdir}
 %attr(640,root,root) %config(noreplace) %verify(not md5 mtime size) %{_sysconfdir}/apache.conf
 %attr(640,root,root) %config(noreplace) %verify(not md5 mtime size) %{_sysconfdir}/httpd.conf
