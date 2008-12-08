@@ -4,7 +4,7 @@ Summary:	phpMyAdmin - web-based MySQL administration
 Summary(pl.UTF-8):	phpMyAdmin - administracja bazami MySQL przez WWW
 Name:		phpMyAdmin
 Version:	3.1.0
-Release:	1
+Release:	2
 License:	GPL v2
 Group:		Applications/Databases/Interfaces
 Source0:	http://dl.sourceforge.net/phpmyadmin/%{name}-%{version}-all-languages.tar.bz2
@@ -82,7 +82,7 @@ podręcznika MySQL). Aktualnie phpMyAdmin potrafi:
 
 %install
 rm -rf $RPM_BUILD_ROOT
-install -d $RPM_BUILD_ROOT{%{_sysconfdir},%{_appdir}/{js,lang,libraries/{auth,dbg,dbi,engines,export,tcpdf/font,import,transformations}}}
+install -d $RPM_BUILD_ROOT{%{_sysconfdir},%{_appdir}/{js,lang,libraries/{auth/swekey,dbg,dbi,engines,export,tcpdf/font,import,transformations}}}
 
 install *.php *.html *.css $RPM_BUILD_ROOT%{_appdir}
 install lang/*.php $RPM_BUILD_ROOT%{_appdir}/lang
@@ -91,6 +91,7 @@ cp -rf themes $RPM_BUILD_ROOT%{_appdir}
 cp -rf js $RPM_BUILD_ROOT%{_appdir}
 install libraries/*.php $RPM_BUILD_ROOT%{_appdir}/libraries
 install libraries/auth/*.php $RPM_BUILD_ROOT%{_appdir}/libraries/auth
+install libraries/auth/swekey/*.{php,crt} $RPM_BUILD_ROOT%{_appdir}/libraries/auth/swekey
 install libraries/dbg/*.php $RPM_BUILD_ROOT%{_appdir}/libraries/dbg
 install libraries/dbi/*.php $RPM_BUILD_ROOT%{_appdir}/libraries/dbi
 install libraries/engines/*.php $RPM_BUILD_ROOT%{_appdir}/libraries/engines
