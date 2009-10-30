@@ -26,7 +26,7 @@ Requires:	php-pcre
 Requires:	webapps
 Requires:	webserver(access)
 Requires:	webserver(alias)
-Requires:	webserver(php)
+Suggests:	webserver(php)
 Suggests:	php-mysqli
 Suggests:	webserver(indexfile)
 BuildArch:	noarch
