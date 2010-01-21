@@ -1,24 +1,38 @@
-%define		_rc	rc1
+# TODO
+# - add codepress (http://codepress.org/index.php) patch
+#
+%define _beta   beta1
+
 Summary:	phpMyAdmin - web-based MySQL administration
-Summary(pl.UTF-8):   phpMyAdmin - administracja bazami MySQL przez WWW
+Summary(pl.UTF-8):	phpMyAdmin - administracja bazami MySQL przez WWW
 Name:		phpMyAdmin
-Version:	2.9.2
-Release:	0.%{_rc}.1
+Version:	3.3.0
+Release:	0.%{_beta}.1
 License:	GPL v2
 Group:		Applications/Databases/Interfaces
-Source0:	http://dl.sourceforge.net/phpmyadmin/%{name}-%{version}-%{_rc}-all-languages.tar.bz2
-# Source0-md5:	86c3f72b2853fb3b50703749af8c42f7
+Source0:	http://dl.sourceforge.net/phpmyadmin/%{name}-%{version}-%{_beta}-all-languages.tar.bz2
+# Source0-md5:	6908514c218a9117686ee7deaf2e6843
 Source1:	%{name}.conf
+Source2:	%{name}-lighttpd.conf
 Patch0:		%{name}-config.patch
+Patch1:		%{name}-ServerSelectDisplayName.patch
+Patch2:		%{name}-ServerSelectDisplayName-config.patch
 URL:		http://www.phpmyadmin.net/
 BuildRequires:	rpmbuild(macros) >= 1.268
 Requires(triggerpostun):	sed >= 4.0
-Requires:	php(mysql)
-Requires:	php(pcre)
+Requires:	php-common >= 4:5.2
+Requires:	php-ctype
+Requires:	php-mbstring
+Requires:	php-mcrypt
+Requires:	php-mysql
+Requires:	php-pcre
+Requires:	php-session
 Requires:	webapps
 Requires:	webserver(access)
-Requires:	webserver(php)
-#Suggests:	php-mbstring
+Requires:	webserver(alias)
+Suggests:	php-mysqli
+Suggests:	webserver(indexfile)
+Suggests:	webserver(php)
 BuildArch:	noarch
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
@@ -42,7 +56,10 @@ manual. Currently phpMyAdmin can:
 - create (*) and read dumps of tables
 - export (*) and import data to CSV values
 - administer multiple servers and single databases
-- communicate in more than 20 different languages
+- check referencial integrity
+- create complex queries automatically connecting required tables
+- create PDF graphics of your database layout
+- communicate in more than 50 different languages
 
 %description -l pl.UTF-8
 phpMyAdmin potrafi zarządzać całymi bazami MySQL (potrzebne
@@ -62,27 +79,30 @@ podręcznika MySQL). Aktualnie phpMyAdmin potrafi:
 - tworzyć i czytać zrzuty tabel
 
 %prep
-%setup -q -n %{name}-%{version}-%{_rc}-all-languages
-%patch0 -p0
+%setup -q -n %{name}-%{version}-%{_beta}-all-languages
+%patch0 -p1
+%patch1 -p0
+%patch2 -p0
 
 %install
 rm -rf $RPM_BUILD_ROOT
-install -d $RPM_BUILD_ROOT{%{_sysconfdir},%{_appdir}/{css,js,lang,libraries/{auth,dbg,dbi,engines,export,fpdf/font,import,transformations}}}
+install -d $RPM_BUILD_ROOT{%{_sysconfdir},%{_appdir}/{js,lang,libraries/{auth/swekey,dbg,dbi,engines,export,tcpdf/font,import,transformations}}}
 
 install *.php *.html *.css $RPM_BUILD_ROOT%{_appdir}
 install lang/*.php $RPM_BUILD_ROOT%{_appdir}/lang
+cp -rf pmd $RPM_BUILD_ROOT%{_appdir}
 cp -rf themes $RPM_BUILD_ROOT%{_appdir}
-install css/* $RPM_BUILD_ROOT%{_appdir}/css
-install js/* $RPM_BUILD_ROOT%{_appdir}/js
+cp -rf js $RPM_BUILD_ROOT%{_appdir}
 install libraries/*.php $RPM_BUILD_ROOT%{_appdir}/libraries
 install libraries/auth/*.php $RPM_BUILD_ROOT%{_appdir}/libraries/auth
+install libraries/auth/swekey/*.{php,crt} $RPM_BUILD_ROOT%{_appdir}/libraries/auth/swekey
 install libraries/dbg/*.php $RPM_BUILD_ROOT%{_appdir}/libraries/dbg
 install libraries/dbi/*.php $RPM_BUILD_ROOT%{_appdir}/libraries/dbi
 install libraries/engines/*.php $RPM_BUILD_ROOT%{_appdir}/libraries/engines
 install libraries/export/*.php $RPM_BUILD_ROOT%{_appdir}/libraries/export
-install libraries/fpdf/*.php $RPM_BUILD_ROOT%{_appdir}/libraries/fpdf
-install libraries/fpdf/font/*.{php,z} $RPM_BUILD_ROOT%{_appdir}/libraries/fpdf/font
 install libraries/import/*.php $RPM_BUILD_ROOT%{_appdir}/libraries/import
+install libraries/tcpdf/*.php $RPM_BUILD_ROOT%{_appdir}/libraries/tcpdf
+install libraries/tcpdf/font/*.{php,z} $RPM_BUILD_ROOT%{_appdir}/libraries/tcpdf/font
 install libraries/transformations/*.php $RPM_BUILD_ROOT%{_appdir}/libraries/transformations
 
 install libraries/config.default.php $RPM_BUILD_ROOT%{_sysconfdir}/config.inc.php
@@ -90,6 +110,10 @@ ln -sf %{_sysconfdir}/config.inc.php $RPM_BUILD_ROOT%{_appdir}/config.inc.php
 
 install %{SOURCE1} $RPM_BUILD_ROOT%{_sysconfdir}/httpd.conf
 install %{SOURCE1} $RPM_BUILD_ROOT%{_sysconfdir}/apache.conf
+install %{SOURCE2} $RPM_BUILD_ROOT%{_sysconfdir}/lighttpd.conf
+
+cp -f libraries/import/README{,-import}
+cp -f libraries/transformations/README{,-transformations}
 
 %clean
 rm -rf $RPM_BUILD_ROOT
@@ -106,56 +130,25 @@ rm -rf $RPM_BUILD_ROOT
 %triggerun -- apache < 2.2.0, apache-base
 %webapp_unregister httpd %{_webapp}
 
-%triggerpostun -- phpMyAdmin <= 2.5.3-2
-for i in `grep -lr "/home/\(services/\)*httpd/html/myadmin" /etc/httpd/*`; do
-	cp $i $i.backup
-	sed -i -e "s#/home/httpd/html/myadmin#%{_appdir}#g" $i
-	sed -i -e "s#/home/services/httpd/html/myadmin#%{_appdir}#g" $i
-	echo "File changed by trigger: $i (backup: $i.backup)"
-done
+%triggerin -- lighttpd
+%webapp_register lighttpd %{_webapp}
 
-%triggerpostun -- %{name} < 2.7.0-pl1.2.5
-# rescue app config from various old locations
-if [ -f /home/services/httpd/html/myadmin/config.inc.php.rpmsave ]; then
-	mv -f %{_sysconfdir}/config.inc.php{,.rpmnew}
-	mv -f /home/services/httpd/html/myadmin/config.inc.php.rpmsav %{_sysconfdir}/config.inc.php
-fi
-if [ -f /home/httpd/html/myadmin/config.inc.php.rpmsave ]; then
-	mv -f %{_sysconfdir}/config.inc.php{,.rpmnew}
-	mv -f /home/httpd/html/myadmin/config.inc.php.rpmsave %{_sysconfdir}/config.inc.php
-fi
-if [ -f /etc/%{name}/config.inc.php.rpmsave ]; then
-	mv -f %{_sysconfdir}/config.inc.php{,.rpmnew}
-	mv -f /etc/%{name}/config.inc.php.rpmsave %{_sysconfdir}/config.inc.php
-fi
-
-# nuke very-old config location (this mostly for Ra)
-if [ -f /etc/httpd/httpd.conf ]; then
-	sed -i -e "/^Include.*%{name}.conf/d" /etc/httpd/httpd.conf
-fi
-
-# migrate from httpd (apache2) config dir
-if [ -f /etc/httpd/%{name}.conf.rpmsave ]; then
-	cp -f %{_sysconfdir}/httpd.conf{,.rpmnew}
-	mv -f /etc/httpd/%{name}.conf.rpmsave %{_sysconfdir}/httpd.conf
-fi
-
-rm -f /etc/httpd/httpd.conf/99_%{name}.conf
-/usr/sbin/webapp register httpd %{_webapp}
-%service httpd reload
+%triggerun -- lighttpd
+%webapp_unregister lighttpd %{_webapp}
 
 %files
 %defattr(644,root,root,755)
-%doc Documentation.* CREDITS ChangeLog INSTALL README TODO translators.html scripts
+%doc Documentation.* CREDITS ChangeLog INSTALL README TODO translators.html scripts libraries/import/README-import libraries/transformations/README-transformations libraries/transformations/TEMPLATE* libraries/transformations/*.sh lang/*.sh
 %dir %attr(750,root,http) %{_sysconfdir}
 %attr(640,root,root) %config(noreplace) %verify(not md5 mtime size) %{_sysconfdir}/apache.conf
 %attr(640,root,root) %config(noreplace) %verify(not md5 mtime size) %{_sysconfdir}/httpd.conf
+%attr(640,root,root) %config(noreplace) %verify(not md5 mtime size) %{_sysconfdir}/lighttpd.conf
 %attr(640,root,http) %config(noreplace) %verify(not md5 mtime size) %{_sysconfdir}/*.php
 %dir %{_appdir}
-%{_appdir}/css
 %{_appdir}/js
 %{_appdir}/lang
 %{_appdir}/libraries
+%{_appdir}/pmd
 %{_appdir}/themes
 %{_appdir}/*.css
 %{_appdir}/*.html
