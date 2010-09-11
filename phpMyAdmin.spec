@@ -7,7 +7,7 @@ Version:	3.3.7
 Release:	1
 License:	GPL v2
 Group:		Applications/Databases/Interfaces
-Source0:	http://dl.sourceforge.net/phpmyadmin/%{name}-%{version}-all-languages.tar.bz2
+Source0:	http://downloads.sourceforge.net/phpmyadmin/%{name}-%{version}-all-languages.tar.bz2
 # Source0-md5:	639cdc0158d60aaf20592665893fc564
 Source1:	%{name}.conf
 Source2:	%{name}-lighttpd.conf
@@ -24,6 +24,7 @@ Requires:	php-mcrypt
 Requires:	php-mysql
 Requires:	php-pcre
 Requires:	php-session
+Requires:	php-simplexml
 Requires:	webapps
 Requires:	webserver(access)
 Requires:	webserver(alias)
