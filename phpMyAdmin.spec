@@ -3,12 +3,12 @@
 Summary:	phpMyAdmin - web-based MySQL administration
 Summary(pl.UTF-8):	phpMyAdmin - administracja bazami MySQL przez WWW
 Name:		phpMyAdmin
-Version:	3.3.10.1
+Version:	3.4.2
 Release:	1
 License:	GPL v2
 Group:		Applications/Databases/Interfaces
 Source0:	http://downloads.sourceforge.net/phpmyadmin/%{name}-%{version}-all-languages.tar.bz2
-# Source0-md5:	ce9c73c1c46970ee7cf3cc88e0d4eb73
+# Source0-md5:	4126d2183c037d9e8f2e0aefa000c243
 Source1:	%{name}.conf
 Source2:	%{name}-lighttpd.conf
 Patch0:		%{name}-config.patch
@@ -84,24 +84,10 @@ podręcznika MySQL). Aktualnie phpMyAdmin potrafi:
 
 %install
 rm -rf $RPM_BUILD_ROOT
-install -d $RPM_BUILD_ROOT{%{_sysconfdir},%{_appdir}/{js,lang,libraries/{auth/swekey,dbg,dbi,engines,export,tcpdf/font,import,transformations}}}
+install -d $RPM_BUILD_ROOT{%{_sysconfdir},%{_appdir}}
 
 install *.php *.html *.css $RPM_BUILD_ROOT%{_appdir}
-install lang/*.php $RPM_BUILD_ROOT%{_appdir}/lang
-cp -rf pmd $RPM_BUILD_ROOT%{_appdir}
-cp -rf themes $RPM_BUILD_ROOT%{_appdir}
-cp -rf js $RPM_BUILD_ROOT%{_appdir}
-install libraries/*.php $RPM_BUILD_ROOT%{_appdir}/libraries
-install libraries/auth/*.php $RPM_BUILD_ROOT%{_appdir}/libraries/auth
-install libraries/auth/swekey/*.{php,crt} $RPM_BUILD_ROOT%{_appdir}/libraries/auth/swekey
-install libraries/dbg/*.php $RPM_BUILD_ROOT%{_appdir}/libraries/dbg
-install libraries/dbi/*.php $RPM_BUILD_ROOT%{_appdir}/libraries/dbi
-install libraries/engines/*.php $RPM_BUILD_ROOT%{_appdir}/libraries/engines
-install libraries/export/*.php $RPM_BUILD_ROOT%{_appdir}/libraries/export
-install libraries/import/*.php $RPM_BUILD_ROOT%{_appdir}/libraries/import
-install libraries/tcpdf/*.php $RPM_BUILD_ROOT%{_appdir}/libraries/tcpdf
-install libraries/tcpdf/font/*.{php,z} $RPM_BUILD_ROOT%{_appdir}/libraries/tcpdf/font
-install libraries/transformations/*.php $RPM_BUILD_ROOT%{_appdir}/libraries/transformations
+cp -a locale pmd themes js libraries $RPM_BUILD_ROOT%{_appdir}
 
 install libraries/config.default.php $RPM_BUILD_ROOT%{_sysconfdir}/config.inc.php
 ln -sf %{_sysconfdir}/config.inc.php $RPM_BUILD_ROOT%{_appdir}/config.inc.php
@@ -136,7 +122,7 @@ rm -rf $RPM_BUILD_ROOT
 
 %files
 %defattr(644,root,root,755)
-%doc Documentation.* CREDITS ChangeLog INSTALL README TODO translators.html scripts libraries/import/README-import libraries/transformations/README-transformations libraries/transformations/TEMPLATE* libraries/transformations/*.sh lang/*.sh
+%doc Documentation.* CREDITS ChangeLog INSTALL README TODO scripts libraries/import/README-import libraries/transformations/README-transformations libraries/transformations/TEMPLATE* libraries/transformations/*.sh
 %dir %attr(750,root,http) %{_sysconfdir}
 %attr(640,root,root) %config(noreplace) %verify(not md5 mtime size) %{_sysconfdir}/apache.conf
 %attr(640,root,root) %config(noreplace) %verify(not md5 mtime size) %{_sysconfdir}/httpd.conf
@@ -144,8 +130,8 @@ rm -rf $RPM_BUILD_ROOT
 %attr(640,root,http) %config(noreplace) %verify(not md5 mtime size) %{_sysconfdir}/*.php
 %dir %{_appdir}
 %{_appdir}/js
-%{_appdir}/lang
 %{_appdir}/libraries
+%{_appdir}/locale
 %{_appdir}/pmd
 %{_appdir}/themes
 %{_appdir}/*.css
