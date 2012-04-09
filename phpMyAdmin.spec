@@ -89,7 +89,7 @@ podręcznika MySQL). Aktualnie phpMyAdmin potrafi:
 rm -rf $RPM_BUILD_ROOT
 install -d $RPM_BUILD_ROOT{%{_sysconfdir},%{_appdir}}
 
-install *.php *.html *.css $RPM_BUILD_ROOT%{_appdir}
+install *.php *.html *.css robots.txt $RPM_BUILD_ROOT%{_appdir}
 cp -a locale themes js libraries $RPM_BUILD_ROOT%{_appdir}
 
 install libraries/config.default.php $RPM_BUILD_ROOT%{_sysconfdir}/config.inc.php
@@ -139,3 +139,4 @@ rm -rf $RPM_BUILD_ROOT
 %{_appdir}/*.css
 %{_appdir}/*.html
 %{_appdir}/*.php
+%{_appdir}/robots.txt
