@@ -1,14 +1,15 @@
 # TODO
 # - add codepress (http://codepress.org/index.php) patch
+# - use system jquery (js/jquery), tcpdf (libraries/tcpdf) and php-gettext (libraries/gettext)
 Summary:	phpMyAdmin - web-based MySQL administration
 Summary(pl.UTF-8):	phpMyAdmin - administracja bazami MySQL przez WWW
 Name:		phpMyAdmin
-Version:	3.4.10.2
+Version:	3.5.0
 Release:	1
 License:	GPL v2
 Group:		Applications/Databases/Interfaces
 Source0:	http://downloads.sourceforge.net/phpmyadmin/%{name}-%{version}-all-languages.tar.bz2
-# Source0-md5:	c4099c9b810065644e34a2a2e5de22f5
+# Source0-md5:	984159d0bca857d57faf3a11c1b30af6
 Source1:	%{name}.conf
 Source2:	%{name}-lighttpd.conf
 Patch0:		%{name}-config.patch
@@ -89,7 +90,7 @@ rm -rf $RPM_BUILD_ROOT
 install -d $RPM_BUILD_ROOT{%{_sysconfdir},%{_appdir}}
 
 install *.php *.html *.css $RPM_BUILD_ROOT%{_appdir}
-cp -a locale pmd themes js libraries $RPM_BUILD_ROOT%{_appdir}
+cp -a locale themes js libraries $RPM_BUILD_ROOT%{_appdir}
 
 install libraries/config.default.php $RPM_BUILD_ROOT%{_sysconfdir}/config.inc.php
 ln -sf %{_sysconfdir}/config.inc.php $RPM_BUILD_ROOT%{_appdir}/config.inc.php
@@ -124,7 +125,7 @@ rm -rf $RPM_BUILD_ROOT
 
 %files
 %defattr(644,root,root,755)
-%doc Documentation.* CREDITS ChangeLog INSTALL README TODO scripts libraries/import/README-import libraries/transformations/README-transformations libraries/transformations/TEMPLATE* libraries/transformations/*.sh
+%doc Documentation.* ChangeLog README README.VENDOR libraries/import/README-import libraries/transformations/README-transformations libraries/transformations/TEMPLATE* libraries/transformations/*.sh
 %dir %attr(750,root,http) %{_sysconfdir}
 %attr(640,root,root) %config(noreplace) %verify(not md5 mtime size) %{_sysconfdir}/apache.conf
 %attr(640,root,root) %config(noreplace) %verify(not md5 mtime size) %{_sysconfdir}/httpd.conf
@@ -134,7 +135,6 @@ rm -rf $RPM_BUILD_ROOT
 %{_appdir}/js
 %{_appdir}/libraries
 %{_appdir}/locale
-%{_appdir}/pmd
 %{_appdir}/themes
 %{_appdir}/*.css
 %{_appdir}/*.html
