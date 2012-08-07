@@ -5,7 +5,7 @@ Summary:	phpMyAdmin - web-based MySQL administration
 Summary(pl.UTF-8):	phpMyAdmin - administracja bazami MySQL przez WWW
 Name:		phpMyAdmin
 Version:	3.5.2
-Release:	1
+Release:	2
 License:	GPL v2
 Group:		Applications/Databases/Interfaces
 Source0:	http://downloads.sourceforge.net/phpmyadmin/%{name}-%{version}-all-languages.tar.bz2
@@ -18,16 +18,16 @@ Patch2:		%{name}-ServerSelectDisplayName-config.patch
 URL:		http://www.phpmyadmin.net/
 BuildRequires:	rpmbuild(macros) >= 1.268
 Requires(triggerpostun):	sed >= 4.0
+Requires:	php(ctype)
+Requires:	php(filter)
+Requires:	php(json)
+Requires:	php(mbstring)
+Requires:	php(mcrypt)
+Requires:	php(mysql)
+Requires:	php(pcre)
+Requires:	php(session)
+Requires:	php(simplexml)
 Requires:	php-common >= 4:5.2
-Requires:	php-ctype
-Requires:	php-filter
-Requires:	php-json
-Requires:	php-mbstring
-Requires:	php-mcrypt
-Requires:	php-mysql
-Requires:	php-pcre
-Requires:	php-session
-Requires:	php-simplexml
 Requires:	webapps
 Requires:	webserver(access)
 Requires:	webserver(alias)
