@@ -4,12 +4,12 @@
 Summary:	phpMyAdmin - web-based MySQL administration
 Summary(pl.UTF-8):	phpMyAdmin - administracja bazami MySQL przez WWW
 Name:		phpMyAdmin
-Version:	3.5.8.1
+Version:	4.0.0
 Release:	1
 License:	GPL v2
 Group:		Applications/Databases/Interfaces
 Source0:	http://downloads.sourceforge.net/phpmyadmin/%{name}-%{version}-all-languages.tar.bz2
-# Source0-md5:	c4681aa8ca76df2f815aa357018d637b
+# Source0-md5:	42ab4ee21915687753861699635d2bde
 Source1:	%{name}.conf
 Source2:	%{name}-lighttpd.conf
 Patch0:		%{name}-config.patch
@@ -89,7 +89,7 @@ podręcznika MySQL). Aktualnie phpMyAdmin potrafi:
 rm -rf $RPM_BUILD_ROOT
 install -d $RPM_BUILD_ROOT{%{_sysconfdir},%{_appdir}}
 
-install *.php *.html *.css robots.txt $RPM_BUILD_ROOT%{_appdir}
+install *.php *.css favicon.ico robots.txt $RPM_BUILD_ROOT%{_appdir}
 cp -a locale themes js libraries $RPM_BUILD_ROOT%{_appdir}
 
 install libraries/config.default.php $RPM_BUILD_ROOT%{_sysconfdir}/config.inc.php
@@ -98,9 +98,6 @@ ln -sf %{_sysconfdir}/config.inc.php $RPM_BUILD_ROOT%{_appdir}/config.inc.php
 install %{SOURCE1} $RPM_BUILD_ROOT%{_sysconfdir}/httpd.conf
 install %{SOURCE1} $RPM_BUILD_ROOT%{_sysconfdir}/apache.conf
 install %{SOURCE2} $RPM_BUILD_ROOT%{_sysconfdir}/lighttpd.conf
-
-cp -f libraries/import/README{,-import}
-cp -f libraries/transformations/README{,-transformations}
 
 %clean
 rm -rf $RPM_BUILD_ROOT
@@ -125,7 +122,7 @@ rm -rf $RPM_BUILD_ROOT
 
 %files
 %defattr(644,root,root,755)
-%doc Documentation.* ChangeLog README README.VENDOR libraries/import/README-import libraries/transformations/README-transformations libraries/transformations/TEMPLATE* libraries/transformations/*.sh
+%doc ChangeLog README
 %dir %attr(750,root,http) %{_sysconfdir}
 %attr(640,root,root) %config(noreplace) %verify(not md5 mtime size) %{_sysconfdir}/apache.conf
 %attr(640,root,root) %config(noreplace) %verify(not md5 mtime size) %{_sysconfdir}/httpd.conf
@@ -137,6 +134,6 @@ rm -rf $RPM_BUILD_ROOT
 %{_appdir}/locale
 %{_appdir}/themes
 %{_appdir}/*.css
-%{_appdir}/*.html
 %{_appdir}/*.php
+%{_appdir}/favicon.ico
 %{_appdir}/robots.txt
