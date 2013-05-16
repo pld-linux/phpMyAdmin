@@ -10,7 +10,7 @@ License:	GPL v2
 Group:		Applications/Databases/Interfaces
 Source0:	http://downloads.sourceforge.net/phpmyadmin/%{name}-%{version}-all-languages.tar.bz2
 # Source0-md5:	42ab4ee21915687753861699635d2bde
-Source1:	%{name}.conf
+Source1:	%{name}-apache.conf
 Source2:	%{name}-lighttpd.conf
 Source3:	%{name}-httpd.conf
 Patch0:		%{name}-config.patch
