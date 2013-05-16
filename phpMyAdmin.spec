@@ -5,13 +5,14 @@ Summary:	phpMyAdmin - web-based MySQL administration
 Summary(pl.UTF-8):	phpMyAdmin - administracja bazami MySQL przez WWW
 Name:		phpMyAdmin
 Version:	4.0.0
-Release:	1
+Release:	2
 License:	GPL v2
 Group:		Applications/Databases/Interfaces
 Source0:	http://downloads.sourceforge.net/phpmyadmin/%{name}-%{version}-all-languages.tar.bz2
 # Source0-md5:	42ab4ee21915687753861699635d2bde
 Source1:	%{name}.conf
 Source2:	%{name}-lighttpd.conf
+Source3:	%{name}-httpd.conf
 Patch0:		%{name}-config.patch
 Patch1:		%{name}-ServerSelectDisplayName.patch
 Patch2:		%{name}-ServerSelectDisplayName-config.patch
@@ -34,6 +35,7 @@ Requires:	webserver(alias)
 Suggests:	php-mysqli
 Suggests:	webserver(indexfile)
 Suggests:	webserver(php)
+Conflicts:	apache-base < 2.4.0-1
 BuildArch:	noarch
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
@@ -96,7 +98,7 @@ install libraries/config.default.php $RPM_BUILD_ROOT%{_sysconfdir}/config.inc.ph
 ln -sf %{_sysconfdir}/config.inc.php $RPM_BUILD_ROOT%{_appdir}/config.inc.php
 
 install %{SOURCE1} $RPM_BUILD_ROOT%{_sysconfdir}/httpd.conf
-install %{SOURCE1} $RPM_BUILD_ROOT%{_sysconfdir}/apache.conf
+install %{SOURCE3} $RPM_BUILD_ROOT%{_sysconfdir}/apache.conf
 install %{SOURCE2} $RPM_BUILD_ROOT%{_sysconfdir}/lighttpd.conf
 
 %clean
@@ -108,10 +110,10 @@ rm -rf $RPM_BUILD_ROOT
 %triggerun -- apache1 < 1.3.37-3, apache1-base
 %webapp_unregister apache %{_webapp}
 
-%triggerin -- apache < 2.2.0, apache-base
+%triggerin -- apache-base
 %webapp_register httpd %{_webapp}
 
-%triggerun -- apache < 2.2.0, apache-base
+%triggerun -- apache-base
 %webapp_unregister httpd %{_webapp}
 
 %triggerin -- lighttpd
