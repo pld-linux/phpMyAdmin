@@ -8,8 +8,8 @@ Version:	4.0.5
 Release:	1
 License:	GPL v2
 Group:		Applications/Databases/Interfaces
-Source0:	http://downloads.sourceforge.net/phpmyadmin/%{name}-%{version}-all-languages.tar.bz2
-# Source0-md5:	0d92fd8dcafefd55d7f80469baac0d64
+Source0:	http://downloads.sourceforge.net/phpmyadmin/%{name}-%{version}-all-languages.tar.xz
+# Source0-md5:	5cc493908d09df1760c7cdcd1622ebf7
 Source1:	%{name}-apache.conf
 Source2:	%{name}-lighttpd.conf
 Source3:	%{name}-httpd.conf
