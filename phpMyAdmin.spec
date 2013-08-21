@@ -18,7 +18,8 @@ Patch1:		%{name}-ServerSelectDisplayName.patch
 Patch2:		%{name}-ServerSelectDisplayName-config.patch
 URL:		http://www.phpmyadmin.net/
 BuildRequires:	rpmbuild(macros) >= 1.268
-Requires(triggerpostun):	sed >= 4.0
+BuildRequires:	tar >= 1:1.22
+BuildRequires:	xz
 Requires:	php(core) >= 5.2
 Requires:	php(ctype)
 Requires:	php(filter)
@@ -32,6 +33,7 @@ Requires:	php(simplexml)
 Requires:	webapps
 Requires:	webserver(access)
 Requires:	webserver(alias)
+Requires(triggerpostun):	sed >= 4.0
 Suggests:	php-mysqli
 Suggests:	webserver(indexfile)
 Suggests:	webserver(php)
