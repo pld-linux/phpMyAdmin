@@ -4,12 +4,12 @@
 Summary:	phpMyAdmin - web-based MySQL administration
 Summary(pl.UTF-8):	phpMyAdmin - administracja bazami MySQL przez WWW
 Name:		phpMyAdmin
-Version:	4.0.5
+Version:	4.0.6
 Release:	1
 License:	GPL v2
 Group:		Applications/Databases/Interfaces
 Source0:	http://downloads.sourceforge.net/phpmyadmin/%{name}-%{version}-all-languages.tar.xz
-# Source0-md5:	5cc493908d09df1760c7cdcd1622ebf7
+# Source0-md5:	646795297032cc9d53fe9bee261919e5
 Source1:	%{name}-apache.conf
 Source2:	%{name}-lighttpd.conf
 Source3:	%{name}-httpd.conf
