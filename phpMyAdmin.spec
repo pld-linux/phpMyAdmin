@@ -4,12 +4,12 @@
 Summary:	phpMyAdmin - web-based MySQL administration
 Summary(pl.UTF-8):	phpMyAdmin - administracja bazami MySQL przez WWW
 Name:		phpMyAdmin
-Version:	4.1.3
+Version:	4.1.4
 Release:	1
 License:	GPL v2
 Group:		Applications/Databases/Interfaces
 Source0:	http://downloads.sourceforge.net/phpmyadmin/%{name}-%{version}-all-languages.tar.xz
-# Source0-md5:	fc4a1851c3f425e12a4aa4091a28e0af
+# Source0-md5:	9802ba0a7ee6afd8941dc8d0af589913
 Source1:	%{name}-apache.conf
 Source2:	%{name}-lighttpd.conf
 Source3:	%{name}-httpd.conf
@@ -20,6 +20,8 @@ URL:		http://www.phpmyadmin.net/
 BuildRequires:	rpmbuild(macros) >= 1.268
 BuildRequires:	tar >= 1:1.22
 BuildRequires:	xz
+# phpMyAdmin doesn't support mysql < 5.5 and won't work with php < 5.3
+Requires:	mysql-libs >= 5.5
 Requires:	php(core) >= 5.3
 Requires:	php(ctype)
 Requires:	php(filter)
@@ -126,7 +128,7 @@ rm -rf $RPM_BUILD_ROOT
 
 %files
 %defattr(644,root,root,755)
-%doc ChangeLog README
+%doc ChangeLog README examples
 %dir %attr(750,root,http) %{_sysconfdir}
 %attr(640,root,root) %config(noreplace) %verify(not md5 mtime size) %{_sysconfdir}/apache.conf
 %attr(640,root,root) %config(noreplace) %verify(not md5 mtime size) %{_sysconfdir}/httpd.conf
