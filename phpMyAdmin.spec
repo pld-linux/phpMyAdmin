@@ -5,12 +5,12 @@ Summary:	phpMyAdmin - web-based MySQL administration
 Summary(pl.UTF-8):	phpMyAdmin - administracja bazami MySQL przez WWW
 Name:		phpMyAdmin
 Version:	4.1.6
-Release:	1
+Release:	2
 License:	GPL v2
 Group:		Applications/Databases/Interfaces
 Source0:	http://downloads.sourceforge.net/phpmyadmin/%{name}-%{version}-all-languages.tar.xz
 # Source0-md5:	2f34f35824f7189822ca2a9f1ccc55ce
-Source1:	%{name}-apache.conf
+Source1:	apache.conf
 Source2:	%{name}-lighttpd.conf
 Patch0:		%{name}-config.patch
 Patch1:		%{name}-ServerSelectDisplayName.patch
@@ -93,15 +93,15 @@ podręcznika MySQL). Aktualnie phpMyAdmin potrafi:
 rm -rf $RPM_BUILD_ROOT
 install -d $RPM_BUILD_ROOT{%{_sysconfdir},%{_appdir}}
 
-install *.php *.css favicon.ico robots.txt $RPM_BUILD_ROOT%{_appdir}
+cp -p *.php *.css favicon.ico robots.txt $RPM_BUILD_ROOT%{_appdir}
 cp -a locale themes js libraries $RPM_BUILD_ROOT%{_appdir}
 
-install libraries/config.default.php $RPM_BUILD_ROOT%{_sysconfdir}/config.inc.php
+cp -p libraries/config.default.php $RPM_BUILD_ROOT%{_sysconfdir}/config.inc.php
 ln -sf %{_sysconfdir}/config.inc.php $RPM_BUILD_ROOT%{_appdir}/config.inc.php
 
-install %{SOURCE1} $RPM_BUILD_ROOT%{_sysconfdir}/httpd.conf
-install %{SOURCE1} $RPM_BUILD_ROOT%{_sysconfdir}/apache.conf
-install %{SOURCE2} $RPM_BUILD_ROOT%{_sysconfdir}/lighttpd.conf
+cp -p %{SOURCE1} $RPM_BUILD_ROOT%{_sysconfdir}/httpd.conf
+cp -p %{SOURCE1} $RPM_BUILD_ROOT%{_sysconfdir}/apache.conf
+cp -p %{SOURCE2} $RPM_BUILD_ROOT%{_sysconfdir}/lighttpd.conf
 
 %clean
 rm -rf $RPM_BUILD_ROOT
