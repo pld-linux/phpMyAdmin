@@ -89,6 +89,9 @@ podręcznika MySQL). Aktualnie phpMyAdmin potrafi:
 %patch1 -p0
 %patch2 -p0
 
+# cleanup backups after patching
+find '(' -name '*~' -o -name '*.orig' ')' -print0 | xargs -0 -r -l512 rm -f
+
 %install
 rm -rf $RPM_BUILD_ROOT
 install -d $RPM_BUILD_ROOT{%{_sysconfdir},%{_appdir}}
