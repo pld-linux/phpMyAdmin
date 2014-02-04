@@ -12,7 +12,6 @@ Source0:	http://downloads.sourceforge.net/phpmyadmin/%{name}-%{version}-all-lang
 # Source0-md5:	2f34f35824f7189822ca2a9f1ccc55ce
 Source1:	%{name}-apache.conf
 Source2:	%{name}-lighttpd.conf
-Source3:	%{name}-httpd.conf
 Patch0:		%{name}-config.patch
 Patch1:		%{name}-ServerSelectDisplayName.patch
 Patch2:		%{name}-ServerSelectDisplayName-config.patch
@@ -39,7 +38,6 @@ Requires(triggerpostun):	sed >= 4.0
 Suggests:	php-mysqli
 Suggests:	webserver(indexfile)
 Suggests:	webserver(php)
-Conflicts:	apache-base < 2.4.0-1
 BuildArch:	noarch
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
@@ -102,7 +100,7 @@ install libraries/config.default.php $RPM_BUILD_ROOT%{_sysconfdir}/config.inc.ph
 ln -sf %{_sysconfdir}/config.inc.php $RPM_BUILD_ROOT%{_appdir}/config.inc.php
 
 install %{SOURCE1} $RPM_BUILD_ROOT%{_sysconfdir}/httpd.conf
-install %{SOURCE3} $RPM_BUILD_ROOT%{_sysconfdir}/apache.conf
+install %{SOURCE1} $RPM_BUILD_ROOT%{_sysconfdir}/apache.conf
 install %{SOURCE2} $RPM_BUILD_ROOT%{_sysconfdir}/lighttpd.conf
 
 %clean
@@ -114,10 +112,10 @@ rm -rf $RPM_BUILD_ROOT
 %triggerun -- apache1 < 1.3.37-3, apache1-base
 %webapp_unregister apache %{_webapp}
 
-%triggerin -- apache-base
+%triggerin -- apache < 2.2.0, apache-base
 %webapp_register httpd %{_webapp}
 
-%triggerun -- apache-base
+%triggerun -- apache < 2.2.0, apache-base
 %webapp_unregister httpd %{_webapp}
 
 %triggerin -- lighttpd
