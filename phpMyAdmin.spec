@@ -4,12 +4,12 @@
 Summary:	phpMyAdmin - web-based MySQL administration
 Summary(pl.UTF-8):	phpMyAdmin - administracja bazami MySQL przez WWW
 Name:		phpMyAdmin
-Version:	4.1.14.8
+Version:	4.4.12
 Release:	1
 License:	GPL v2
 Group:		Applications/Databases/Interfaces
-Source0:	http://downloads.sourceforge.net/phpmyadmin/%{name}-%{version}-all-languages.tar.xz
-# Source0-md5:	b073cc6db07103a686398ebaab9fc27a
+Source0:	https://files.phpmyadmin.net/phpMyAdmin/%{version}/%{name}-%{version}-all-languages.tar.xz
+# Source0-md5:	61647a8ab0f47bf99ed3c79103237017
 Source1:	apache.conf
 Source2:	%{name}-lighttpd.conf
 Patch0:		%{name}-config.patch
@@ -35,7 +35,7 @@ Requires:	webapps
 Requires:	webserver(access)
 Requires:	webserver(alias)
 Requires(triggerpostun):	sed >= 4.0
-Suggests:	php-mysqli
+Suggests:	php(mysqli)
 Suggests:	webserver(indexfile)
 Suggests:	webserver(php)
 BuildArch:	noarch
@@ -58,13 +58,13 @@ manual. Currently phpMyAdmin can:
 - execute any SQL-statement, even batch-queries
 - manage keys on fields
 - load text files into tables
-- create (*) and read dumps of tables
-- export (*) and import data to CSV values
+- create and read dumps of tables
+- export and import data to CSV values
 - administer multiple servers and single databases
 - check referencial integrity
 - create complex queries automatically connecting required tables
 - create PDF graphics of your database layout
-- communicate in more than 50 different languages
+- communicate in more than 72 different languages
 
 %description -l pl.UTF-8
 phpMyAdmin potrafi zarządzać całymi bazami MySQL (potrzebne
@@ -78,7 +78,7 @@ podręcznika MySQL). Aktualnie phpMyAdmin potrafi:
 - wykonywać dowolne zapytania SQL
 - zarządzać kluczami na rekordach
 - wczytywać tekst z plików do tabel
-- obsługiwać ponad 20 języków
+- obsługiwać ponad 72 języków
 - zarządzać wieloma serwerami i pojedynczymi bazami danych
 - eksportować i importować dane do wartości CSV
 - tworzyć i czytać zrzuty tabel
