@@ -92,19 +92,26 @@ podręcznika MySQL). Aktualnie phpMyAdmin potrafi:
 # cleanup backups after patching
 find '(' -name '*~' -o -name '*.orig' ')' -print0 | xargs -0 -r -l512 rm -f
 
+# github stuff
+%{__rm} .coveralls.yml .scrutinizer.yml composer.json phpunit.xml*
+
 %install
 rm -rf $RPM_BUILD_ROOT
 install -d $RPM_BUILD_ROOT{%{_sysconfdir},%{_appdir}}
 
-cp -p *.php *.css favicon.ico robots.txt $RPM_BUILD_ROOT%{_appdir}
-cp -a locale themes js libraries $RPM_BUILD_ROOT%{_appdir}
+cp -a . $RPM_BUILD_ROOT%{_appdir}
 
 cp -p libraries/config.default.php $RPM_BUILD_ROOT%{_sysconfdir}/config.inc.php
-ln -sf %{_sysconfdir}/config.inc.php $RPM_BUILD_ROOT%{_appdir}/config.inc.php
+ln -s %{_sysconfdir}/config.inc.php $RPM_BUILD_ROOT%{_appdir}/config.inc.php
 
 cp -p %{SOURCE1} $RPM_BUILD_ROOT%{_sysconfdir}/httpd.conf
 cp -p %{SOURCE1} $RPM_BUILD_ROOT%{_sysconfdir}/apache.conf
 cp -p %{SOURCE2} $RPM_BUILD_ROOT%{_sysconfdir}/lighttpd.conf
+
+# packaged as doc
+%{__rm} $RPM_BUILD_ROOT%{_appdir}/{CONTRIBUTING.md,ChangeLog,DCO,LICENSE,README,RELEASE-DATE-*}
+# cleanup not packaged stuff
+%{__rm} -r $RPM_BUILD_ROOT%{_appdir}/{doc,examples,setup,sql}
 
 %clean
 rm -rf $RPM_BUILD_ROOT
@@ -129,7 +136,7 @@ rm -rf $RPM_BUILD_ROOT
 
 %files
 %defattr(644,root,root,755)
-%doc ChangeLog README examples
+%doc CONTRIBUTING.md ChangeLog DCO LICENSE README examples/
 %dir %attr(750,root,http) %{_sysconfdir}
 %attr(640,root,root) %config(noreplace) %verify(not md5 mtime size) %{_sysconfdir}/apache.conf
 %attr(640,root,root) %config(noreplace) %verify(not md5 mtime size) %{_sysconfdir}/httpd.conf
