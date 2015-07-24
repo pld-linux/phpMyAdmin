@@ -5,14 +5,13 @@ Summary:	phpMyAdmin - web-based MySQL administration
 Summary(pl.UTF-8):	phpMyAdmin - administracja bazami MySQL przez WWW
 Name:		phpMyAdmin
 Version:	4.0.10.10
-Release:	1
+Release:	0.2
 License:	GPL v2
 Group:		Applications/Databases/Interfaces
 Source0:	https://files.phpmyadmin.net/phpMyAdmin/%{version}/%{name}-%{version}-all-languages.tar.xz
-# Source0-md5:	0690e8a5263776c3fbf5b47bd85253e8
-Source1:	%{name}-apache.conf
+# Source0-md5:	61647a8ab0f47bf99ed3c79103237017
+Source1:	apache.conf
 Source2:	%{name}-lighttpd.conf
-Source3:	%{name}-httpd.conf
 Patch0:		%{name}-config.patch
 Patch1:		%{name}-ServerSelectDisplayName.patch
 Patch2:		%{name}-ServerSelectDisplayName-config.patch
@@ -37,7 +36,6 @@ Requires(triggerpostun):	sed >= 4.0
 Suggests:	php(mysqli)
 Suggests:	webserver(indexfile)
 Suggests:	webserver(php)
-Conflicts:	apache-base < 2.4.0-1
 BuildArch:	noarch
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
@@ -64,7 +62,7 @@ manual. Currently phpMyAdmin can:
 - check referencial integrity
 - create complex queries automatically connecting required tables
 - create PDF graphics of your database layout
-- communicate in more than 50 different languages
+- communicate in more than 72 different languages
 
 This is older version compatible with PHP 5.2 and MySQL 5. Supported
 for security fixes only, until Jan 1, 2017.
@@ -81,7 +79,7 @@ podręcznika MySQL). Aktualnie phpMyAdmin potrafi:
 - wykonywać dowolne zapytania SQL
 - zarządzać kluczami na rekordach
 - wczytywać tekst z plików do tabel
-- obsługiwać ponad 20 języków
+- obsługiwać ponad 72 języków
 - zarządzać wieloma serwerami i pojedynczymi bazami danych
 - eksportować i importować dane do wartości CSV
 - tworzyć i czytać zrzuty tabel
@@ -92,19 +90,28 @@ podręcznika MySQL). Aktualnie phpMyAdmin potrafi:
 %patch1 -p0
 %patch2 -p0
 
+# cleanup backups after patching
+find '(' -name '*~' -o -name '*.orig' ')' -print0 | xargs -0 -r -l512 rm -f
+
+# github stuff
+%{__rm} composer.json phpunit.xml*
+
 %install
 rm -rf $RPM_BUILD_ROOT
 install -d $RPM_BUILD_ROOT{%{_sysconfdir},%{_appdir}}
-
-cp -p *.php *.css favicon.ico robots.txt $RPM_BUILD_ROOT%{_appdir}
-cp -a locale themes js libraries $RPM_BUILD_ROOT%{_appdir}
+cp -a . $RPM_BUILD_ROOT%{_appdir}
 
 cp -p libraries/config.default.php $RPM_BUILD_ROOT%{_sysconfdir}/config.inc.php
-ln -sf %{_sysconfdir}/config.inc.php $RPM_BUILD_ROOT%{_appdir}/config.inc.php
+ln -s %{_sysconfdir}/config.inc.php $RPM_BUILD_ROOT%{_appdir}/config.inc.php
 
 cp -p %{SOURCE1} $RPM_BUILD_ROOT%{_sysconfdir}/httpd.conf
-cp -p %{SOURCE3} $RPM_BUILD_ROOT%{_sysconfdir}/apache.conf
+cp -p %{SOURCE1} $RPM_BUILD_ROOT%{_sysconfdir}/apache.conf
 cp -p %{SOURCE2} $RPM_BUILD_ROOT%{_sysconfdir}/lighttpd.conf
+
+# packaged as doc
+%{__rm} $RPM_BUILD_ROOT%{_appdir}/{ChangeLog,LICENSE,README,RELEASE-DATE-*}
+# cleanup not packaged stuff
+%{__rm} -r $RPM_BUILD_ROOT%{_appdir}/{doc,examples,setup}
 
 %clean
 rm -rf $RPM_BUILD_ROOT
@@ -115,10 +122,10 @@ rm -rf $RPM_BUILD_ROOT
 %triggerun -- apache1 < 1.3.37-3, apache1-base
 %webapp_unregister apache %{_webapp}
 
-%triggerin -- apache-base
+%triggerin -- apache < 2.2.0, apache-base
 %webapp_register httpd %{_webapp}
 
-%triggerun -- apache-base
+%triggerun -- apache < 2.2.0, apache-base
 %webapp_unregister httpd %{_webapp}
 
 %triggerin -- lighttpd
@@ -129,7 +136,7 @@ rm -rf $RPM_BUILD_ROOT
 
 %files
 %defattr(644,root,root,755)
-%doc ChangeLog README
+%doc ChangeLog LICENSE README examples/
 %dir %attr(750,root,http) %{_sysconfdir}
 %attr(640,root,root) %config(noreplace) %verify(not md5 mtime size) %{_sysconfdir}/apache.conf
 %attr(640,root,root) %config(noreplace) %verify(not md5 mtime size) %{_sysconfdir}/httpd.conf
