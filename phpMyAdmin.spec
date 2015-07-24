@@ -4,19 +4,19 @@
 Summary:	phpMyAdmin - web-based MySQL administration
 Summary(pl.UTF-8):	phpMyAdmin - administracja bazami MySQL przez WWW
 Name:		phpMyAdmin
-Version:	4.0.9
+Version:	4.0.10.10
 Release:	1
 License:	GPL v2
 Group:		Applications/Databases/Interfaces
-Source0:	http://downloads.sourceforge.net/phpmyadmin/%{name}-%{version}-all-languages.tar.xz
-# Source0-md5:	3530c80086324d45894633f863f11d8f
+Source0:	https://files.phpmyadmin.net/phpMyAdmin/%{version}/%{name}-%{version}-all-languages.tar.xz
+# Source0-md5:	0690e8a5263776c3fbf5b47bd85253e8
 Source1:	%{name}-apache.conf
 Source2:	%{name}-lighttpd.conf
 Source3:	%{name}-httpd.conf
 Patch0:		%{name}-config.patch
 Patch1:		%{name}-ServerSelectDisplayName.patch
 Patch2:		%{name}-ServerSelectDisplayName-config.patch
-URL:		http://www.phpmyadmin.net/
+URL:		https://www.phpmyadmin.net/
 BuildRequires:	rpmbuild(macros) >= 1.268
 BuildRequires:	tar >= 1:1.22
 BuildRequires:	xz
@@ -34,7 +34,7 @@ Requires:	webapps
 Requires:	webserver(access)
 Requires:	webserver(alias)
 Requires(triggerpostun):	sed >= 4.0
-Suggests:	php-mysqli
+Suggests:	php(mysqli)
 Suggests:	webserver(indexfile)
 Suggests:	webserver(php)
 Conflicts:	apache-base < 2.4.0-1
@@ -58,13 +58,16 @@ manual. Currently phpMyAdmin can:
 - execute any SQL-statement, even batch-queries
 - manage keys on fields
 - load text files into tables
-- create (*) and read dumps of tables
-- export (*) and import data to CSV values
+- create and read dumps of tables
+- export and import data to CSV values
 - administer multiple servers and single databases
 - check referencial integrity
 - create complex queries automatically connecting required tables
 - create PDF graphics of your database layout
 - communicate in more than 50 different languages
+
+This is older version compatible with PHP 5.2 and MySQL 5. Supported
+for security fixes only, until Jan 1, 2017.
 
 %description -l pl.UTF-8
 phpMyAdmin potrafi zarządzać całymi bazami MySQL (potrzebne
@@ -93,15 +96,15 @@ podręcznika MySQL). Aktualnie phpMyAdmin potrafi:
 rm -rf $RPM_BUILD_ROOT
 install -d $RPM_BUILD_ROOT{%{_sysconfdir},%{_appdir}}
 
-install *.php *.css favicon.ico robots.txt $RPM_BUILD_ROOT%{_appdir}
+cp -p *.php *.css favicon.ico robots.txt $RPM_BUILD_ROOT%{_appdir}
 cp -a locale themes js libraries $RPM_BUILD_ROOT%{_appdir}
 
-install libraries/config.default.php $RPM_BUILD_ROOT%{_sysconfdir}/config.inc.php
+cp -p libraries/config.default.php $RPM_BUILD_ROOT%{_sysconfdir}/config.inc.php
 ln -sf %{_sysconfdir}/config.inc.php $RPM_BUILD_ROOT%{_appdir}/config.inc.php
 
-install %{SOURCE1} $RPM_BUILD_ROOT%{_sysconfdir}/httpd.conf
-install %{SOURCE3} $RPM_BUILD_ROOT%{_sysconfdir}/apache.conf
-install %{SOURCE2} $RPM_BUILD_ROOT%{_sysconfdir}/lighttpd.conf
+cp -p %{SOURCE1} $RPM_BUILD_ROOT%{_sysconfdir}/httpd.conf
+cp -p %{SOURCE3} $RPM_BUILD_ROOT%{_sysconfdir}/apache.conf
+cp -p %{SOURCE2} $RPM_BUILD_ROOT%{_sysconfdir}/lighttpd.conf
 
 %clean
 rm -rf $RPM_BUILD_ROOT
