@@ -9,7 +9,7 @@ Release:	1
 License:	GPL v2
 Group:		Applications/Databases/Interfaces
 Source0:	https://files.phpmyadmin.net/phpMyAdmin/%{version}/%{name}-%{version}-all-languages.tar.xz
-# Source0-md5:	61647a8ab0f47bf99ed3c79103237017
+# Source0-md5:	0690e8a5263776c3fbf5b47bd85253e8
 Source1:	apache.conf
 Source2:	%{name}-lighttpd.conf
 Patch0:		%{name}-config.patch
