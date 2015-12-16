@@ -5,7 +5,7 @@ Summary:	phpMyAdmin - web-based MySQL administration
 Summary(pl.UTF-8):	phpMyAdmin - administracja bazami MySQL przez WWW
 Name:		phpMyAdmin
 Version:	4.4.12
-Release:	1
+Release:	1.1
 License:	GPL v2
 Group:		Applications/Databases/Interfaces
 Source0:	https://files.phpmyadmin.net/phpMyAdmin/%{version}/%{name}-%{version}-all-languages.tar.xz
@@ -111,7 +111,7 @@ cp -p %{SOURCE2} $RPM_BUILD_ROOT%{_sysconfdir}/lighttpd.conf
 # packaged as doc
 %{__rm} $RPM_BUILD_ROOT%{_appdir}/{CONTRIBUTING.md,ChangeLog,DCO,LICENSE,README,RELEASE-DATE-*}
 # cleanup not packaged stuff
-%{__rm} -r $RPM_BUILD_ROOT%{_appdir}/{doc,examples,setup,sql}
+%{__rm} -r $RPM_BUILD_ROOT%{_appdir}/{doc,examples,setup}
 
 %clean
 rm -rf $RPM_BUILD_ROOT
@@ -146,6 +146,7 @@ rm -rf $RPM_BUILD_ROOT
 %{_appdir}/js
 %{_appdir}/libraries
 %{_appdir}/locale
+%{_appdir}/sql
 %{_appdir}/themes
 %{_appdir}/*.css
 %{_appdir}/*.php
