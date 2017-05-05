@@ -4,12 +4,12 @@
 Summary:	phpMyAdmin - web-based MySQL administration
 Summary(pl.UTF-8):	phpMyAdmin - administracja bazami MySQL przez WWW
 Name:		phpMyAdmin
-Version:	4.4.12
+Version:	4.4.15.10
 Release:	1
 License:	GPL v2
 Group:		Applications/Databases/Interfaces
 Source0:	https://files.phpmyadmin.net/phpMyAdmin/%{version}/%{name}-%{version}-all-languages.tar.xz
-# Source0-md5:	61647a8ab0f47bf99ed3c79103237017
+# Source0-md5:	984adeb9153144580887695ba392576b
 Source1:	apache.conf
 Source2:	%{name}-lighttpd.conf
 Patch0:		%{name}-config.patch
@@ -93,7 +93,7 @@ podręcznika MySQL). Aktualnie phpMyAdmin potrafi:
 find '(' -name '*~' -o -name '*.orig' ')' -print0 | xargs -0 -r -l512 rm -f
 
 # github stuff
-%{__rm} .coveralls.yml .scrutinizer.yml composer.json phpunit.xml*
+%{__rm} composer.json phpunit.xml*
 
 %install
 rm -rf $RPM_BUILD_ROOT
