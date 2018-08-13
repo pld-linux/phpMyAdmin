@@ -4,12 +4,12 @@
 Summary:	phpMyAdmin - web-based MySQL administration
 Summary(pl.UTF-8):	phpMyAdmin - administracja bazami MySQL przez WWW
 Name:		phpMyAdmin
-Version:	4.0.10.10
+Version:	4.0.10.20
 Release:	1
 License:	GPL v2
 Group:		Applications/Databases/Interfaces
 Source0:	https://files.phpmyadmin.net/phpMyAdmin/%{version}/%{name}-%{version}-all-languages.tar.xz
-# Source0-md5:	0690e8a5263776c3fbf5b47bd85253e8
+# Source0-md5:	b78ca6f0f94ede5c16cf57540a7c9b68
 Source1:	apache.conf
 Source2:	%{name}-lighttpd.conf
 Patch0:		%{name}-config.patch
@@ -94,7 +94,7 @@ podręcznika MySQL). Aktualnie phpMyAdmin potrafi:
 find '(' -name '*~' -o -name '*.orig' ')' -print0 | xargs -0 -r -l512 rm -f
 
 # github stuff
-%{__rm} composer.json phpunit.xml*
+%{__rm} composer.json
 
 %install
 rm -rf $RPM_BUILD_ROOT
@@ -111,7 +111,7 @@ cp -p %{SOURCE2} $RPM_BUILD_ROOT%{_sysconfdir}/lighttpd.conf
 # packaged as doc
 %{__rm} $RPM_BUILD_ROOT%{_appdir}/{ChangeLog,LICENSE,README,RELEASE-DATE-*}
 # cleanup not packaged stuff
-%{__rm} -r $RPM_BUILD_ROOT%{_appdir}/{doc,examples,setup,scripts}
+%{__rm} -r $RPM_BUILD_ROOT%{_appdir}/{doc,examples,setup}
 
 %clean
 rm -rf $RPM_BUILD_ROOT
