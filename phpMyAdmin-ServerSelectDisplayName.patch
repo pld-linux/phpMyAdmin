@@ -1,19 +1,11 @@
-*** libraries/select_server.lib.php.org	Tue Aug 19 00:41:59 2008
---- libraries/select_server.lib.php	Tue Aug 19 00:42:35 2008
-***************
-*** 62,68 ****
-          if (!empty($server['verbose'])) {
-              $label = $server['verbose'];
-          } else {
-!             $label = $server['host'];
-              if (!empty($server['port'])) {
-                  $label .= ':' . $server['port'];
-              }
---- 62,68 ----
-          if (!empty($server['verbose'])) {
-              $label = $server['verbose'];
-          } else {
-!             $label = isset($server['display']) ? $server['display'] : $server['host'];
-              if (!empty($server['port'])) {
-                  $label .= ':' . $server['port'];
-              }
+--- phpMyAdmin-4.8.2-all-languages/libraries/classes/Server/Select.php~	2018-06-21 20:08:17.000000000 +0300
++++ phpMyAdmin-4.8.2-all-languages/libraries/classes/Server/Select.php	2018-08-13 12:00:56.105426801 +0300
+@@ -72,7 +72,7 @@
+             if (!empty($server['verbose'])) {
+                 $label = $server['verbose'];
+             } else {
+-                $label = $server['host'];
++                $label = isset($server['display']) ? $server['display'] : $server['host'];
+                 if (!empty($server['port'])) {
+                     $label .= ':' . $server['port'];
+                 }

@@ -4,12 +4,12 @@
 Summary:	phpMyAdmin - web-based MySQL administration
 Summary(pl.UTF-8):	phpMyAdmin - administracja bazami MySQL przez WWW
 Name:		phpMyAdmin
-Version:	4.4.15.10
-Release:	1
+Version:	4.8.2
+Release:	0.1
 License:	GPL v2
 Group:		Applications/Databases/Interfaces
 Source0:	https://files.phpmyadmin.net/phpMyAdmin/%{version}/%{name}-%{version}-all-languages.tar.xz
-# Source0-md5:	984adeb9153144580887695ba392576b
+# Source0-md5:	047b340a038b89e9e34f426084101f03
 Source1:	apache.conf
 Source2:	%{name}-lighttpd.conf
 Patch0:		%{name}-config.patch
@@ -86,14 +86,13 @@ podręcznika MySQL). Aktualnie phpMyAdmin potrafi:
 %prep
 %setup -q -n %{name}-%{version}-all-languages
 %patch0 -p1
-%patch1 -p0
+%patch1 -p1
 %patch2 -p0
 
 # cleanup backups after patching
 find '(' -name '*~' -o -name '*.orig' ')' -print0 | xargs -0 -r -l512 rm -f
 
-# github stuff
-%{__rm} composer.json phpunit.xml*
+%{__rm} .editorconfig .eslintignore .eslintrc.json composer.json composer.lock package.json phpcs.xml.dist yarn.lock
 
 %install
 rm -rf $RPM_BUILD_ROOT
@@ -109,7 +108,7 @@ cp -p %{SOURCE1} $RPM_BUILD_ROOT%{_sysconfdir}/apache.conf
 cp -p %{SOURCE2} $RPM_BUILD_ROOT%{_sysconfdir}/lighttpd.conf
 
 # packaged as doc
-%{__rm} $RPM_BUILD_ROOT%{_appdir}/{CONTRIBUTING.md,ChangeLog,DCO,LICENSE,README,RELEASE-DATE-*}
+%{__rm} $RPM_BUILD_ROOT%{_appdir}/{CONTRIBUTING.md,ChangeLog,DCO,LICENSE,README,RELEASE-DATE-*,CODE_OF_CONDUCT.md}
 # cleanup not packaged stuff
 %{__rm} -r $RPM_BUILD_ROOT%{_appdir}/{doc,examples,setup,sql}
 
@@ -143,11 +142,13 @@ rm -rf $RPM_BUILD_ROOT
 %attr(640,root,root) %config(noreplace) %verify(not md5 mtime size) %{_sysconfdir}/lighttpd.conf
 %attr(640,root,http) %config(noreplace) %verify(not md5 mtime size) %{_sysconfdir}/*.php
 %dir %{_appdir}
-%{_appdir}/js
-%{_appdir}/libraries
-%{_appdir}/locale
-%{_appdir}/themes
 %{_appdir}/*.css
 %{_appdir}/*.php
 %{_appdir}/favicon.ico
+%{_appdir}/js
+%{_appdir}/libraries
+%{_appdir}/locale
 %{_appdir}/robots.txt
+%{_appdir}/themes
+%{_appdir}/templates
+%{_appdir}/vendor
