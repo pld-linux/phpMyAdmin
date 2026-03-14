@@ -1,12 +1,13 @@
-diff -burNp phpMyAdmin-3.1.0-all-languages/libraries/config.default.php phpMyAdmin-3.1.0-all-languages-new/libraries/config.default.php
---- phpMyAdmin-3.1.0-all-languages/libraries/config.default.php	2008-11-28 14:21:00.000000000 +0100
-+++ phpMyAdmin-3.1.0-all-languages-new/libraries/config.default.php	2008-12-02 10:31:40.200149063 +0100
-@@ -180,7 +180,7 @@ $cfg['Servers'][$i]['auth_swekey_config'
+Change default MySQL user from root to mysql for PLD Linux.
+
+--- phpMyAdmin-5.2.3-all-languages/libraries/config.default.php.orig	2025-10-07 22:40:00.000000000 +0200
++++ phpMyAdmin-5.2.3-all-languages/libraries/config.default.php	2025-10-07 22:40:00.000000000 +0200
+@@ -261,7 +261,7 @@
   *
   * @global string $cfg['Servers'][$i]['user']
   */
 -$cfg['Servers'][$i]['user'] = 'root';
 +$cfg['Servers'][$i]['user'] = 'mysql';
- 
+
  /**
   * MySQL password (only needed with 'config' auth_type)

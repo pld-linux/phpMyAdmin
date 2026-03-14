@@ -1,41 +1,44 @@
-# TODO
-# - add codepress (http://codepress.org/index.php) patch
-# - use system jquery (js/jquery), tcpdf (libraries/tcpdf) and php-gettext (libraries/gettext)
 Summary:	phpMyAdmin - web-based MySQL administration
 Summary(pl.UTF-8):	phpMyAdmin - administracja bazami MySQL przez WWW
 Name:		phpMyAdmin
-Version:	4.8.5
+Version:	5.2.3
 Release:	1
-License:	GPL v2
+License:	GPL v2+
 Group:		Applications/Databases/Interfaces
 Source0:	https://files.phpmyadmin.net/phpMyAdmin/%{version}/%{name}-%{version}-all-languages.tar.xz
-# Source0-md5:	e3737a28fff076003e56a83fe1920d04
+# Source0-md5:	2e8251b59b87636701afbb9381f2bcba
 Source1:	apache.conf
 Source2:	%{name}-lighttpd.conf
 Patch0:		%{name}-config.patch
 Patch1:		%{name}-ServerSelectDisplayName.patch
 Patch2:		%{name}-ServerSelectDisplayName-config.patch
-URL:		http://www.phpmyadmin.net/
+URL:		https://www.phpmyadmin.net/
 BuildRequires:	rpmbuild(macros) >= 1.268
 BuildRequires:	tar >= 1:1.22
 BuildRequires:	xz
-# phpMyAdmin doesn't support mysql < 5.5 and won't work with php < 5.3
+# phpMyAdmin 5.x requires MySQL/MariaDB >= 5.5 and PHP >= 7.2
 Requires:	mysql-libs >= 5.5
-Requires:	php(core) >= 5.3
+Requires:	php(core) >= 7.2
 Requires:	php(ctype)
 Requires:	php(filter)
+Requires:	php(iconv)
 Requires:	php(json)
 Requires:	php(mbstring)
-Requires:	php(mcrypt)
-Requires:	php(mysql)
+Requires:	php(mysqli)
+Requires:	php(openssl)
 Requires:	php(pcre)
 Requires:	php(session)
 Requires:	php(simplexml)
+Requires:	php(xml)
 Requires:	webapps
 Requires:	webserver(access)
 Requires:	webserver(alias)
-Requires(triggerpostun):	sed >= 4.0
-Suggests:	php(mysqli)
+Suggests:	php(bz2)
+Suggests:	php(curl)
+Suggests:	php(gd)
+Suggests:	php(intl)
+Suggests:	php(zip)
+Suggests:	php(zlib)
 Suggests:	webserver(indexfile)
 Suggests:	webserver(php)
 BuildArch:	noarch
@@ -87,12 +90,12 @@ podręcznika MySQL). Aktualnie phpMyAdmin potrafi:
 %setup -q -n %{name}-%{version}-all-languages
 %patch -P0 -p1
 %patch -P1 -p1
-%patch -P2 -p0
+%patch -P2 -p1
 
 # cleanup backups after patching
 find '(' -name '*~' -o -name '*.orig' ')' -print0 | xargs -0 -r -l512 rm -f
 
-%{__rm} .editorconfig .eslintignore .eslintrc.json composer.json composer.lock package.json phpcs.xml.dist yarn.lock
+%{__rm} babel.config.json .rtlcssrc.json composer.json composer.lock package.json yarn.lock
 
 %install
 rm -rf $RPM_BUILD_ROOT
@@ -108,7 +111,7 @@ cp -p %{SOURCE1} $RPM_BUILD_ROOT%{_sysconfdir}/apache.conf
 cp -p %{SOURCE2} $RPM_BUILD_ROOT%{_sysconfdir}/lighttpd.conf
 
 # packaged as doc
-%{__rm} $RPM_BUILD_ROOT%{_appdir}/{CONTRIBUTING.md,ChangeLog,DCO,LICENSE,README,RELEASE-DATE-*,CODE_OF_CONDUCT.md}
+%{__rm} $RPM_BUILD_ROOT%{_appdir}/{CONTRIBUTING.md,ChangeLog,LICENSE,README,RELEASE-DATE-*}
 # cleanup not packaged stuff
 %{__rm} -r $RPM_BUILD_ROOT%{_appdir}/{doc,examples,setup,sql}
 
@@ -135,14 +138,13 @@ rm -rf $RPM_BUILD_ROOT
 
 %files
 %defattr(644,root,root,755)
-%doc CONTRIBUTING.md ChangeLog DCO LICENSE README examples/
+%doc CONTRIBUTING.md ChangeLog LICENSE README examples/
 %dir %attr(750,root,http) %{_sysconfdir}
 %attr(640,root,root) %config(noreplace) %verify(not md5 mtime size) %{_sysconfdir}/apache.conf
 %attr(640,root,root) %config(noreplace) %verify(not md5 mtime size) %{_sysconfdir}/httpd.conf
 %attr(640,root,root) %config(noreplace) %verify(not md5 mtime size) %{_sysconfdir}/lighttpd.conf
 %attr(640,root,http) %config(noreplace) %verify(not md5 mtime size) %{_sysconfdir}/*.php
 %dir %{_appdir}
-%{_appdir}/*.css
 %{_appdir}/*.php
 %{_appdir}/favicon.ico
 %{_appdir}/js

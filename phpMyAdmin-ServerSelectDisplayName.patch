@@ -1,11 +1,13 @@
---- phpMyAdmin-4.8.2-all-languages/libraries/classes/Server/Select.php~	2018-06-21 20:08:17.000000000 +0300
-+++ phpMyAdmin-4.8.2-all-languages/libraries/classes/Server/Select.php	2018-08-13 12:00:56.105426801 +0300
-@@ -72,7 +72,7 @@
-             if (!empty($server['verbose'])) {
+Support 'display' config option as fallback server label in server selection.
+
+--- phpMyAdmin-5.2.3-all-languages/libraries/classes/Server/Select.php.orig	2025-10-07 22:40:00.000000000 +0200
++++ phpMyAdmin-5.2.3-all-languages/libraries/classes/Server/Select.php	2025-10-07 22:40:00.000000000 +0200
+@@ -59,7 +59,7 @@
+             if (! empty($server['verbose'])) {
                  $label = $server['verbose'];
              } else {
 -                $label = $server['host'];
 +                $label = isset($server['display']) ? $server['display'] : $server['host'];
-                 if (!empty($server['port'])) {
+                 if (! empty($server['port'])) {
                      $label .= ':' . $server['port'];
                  }
